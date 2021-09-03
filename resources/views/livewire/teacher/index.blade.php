@@ -64,16 +64,10 @@
 					<div class="text-gray-900">{{ $teacher->username }}</div>
 				</x-td>
 				<x-td class="text-right text-sm font-medium">
-					<div class="flex items-center justify-end space-x-2 relative">
-						<x-jet-dropdown align="right" width="48">
-							<x-slot name="trigger">
-								<x-jet-secondary-button>{{ __('Riwayat') }}</x-jet-secondary-button>
-							</x-slot>
-							<x-slot name="content">
-								<x-jet-dropdown-link href="{{ route('teacher.history.index', $teacher->id) }}">{{ __('Absensi') }}</x-jet-dropdown-link>
-								<x-jet-dropdown-link href="{{ route('scoring.index', $teacher->id) }}">{{ __('Penilaian') }}</x-jet-dropdown-link>
-							</x-slot>
-						</x-jet-dropdown>
+					<div class="flex items-center justify-end space-x-2">
+						<x-button-link-secondary href="{{ route('teacher.history.index', $teacher->id) }}">{{ __('Absensi') }}</x-button-link-secondary>
+						<x-button-link-secondary href="{{ route('scoring.index', $teacher->id) }}">{{ __('Penilaian') }}</x-button-link-secondary>
+						
 						<x-buttons.button-profile href="{{ route('teacher.show', $teacher->id) }}"></x-buttons.button-profile>
 					</div>
 				</x-td>
