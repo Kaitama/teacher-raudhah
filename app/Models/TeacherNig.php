@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class TeacherNig extends Model
 {
 	use HasFactory;
+	protected $table = 'teacher_nigs';
 	protected $guarded = [];
 
 	public function user(){
