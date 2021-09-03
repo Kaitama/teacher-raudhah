@@ -8,7 +8,7 @@
 	</div>
 	
 	<div class="px-4 flex flex-col md:flex-row md:items-center items-end md:justify-between">
-
+		
 		<div class="flex flex-row space-x-2">
 			<x-select wire:model="perpage" class="w-1/8">
 				<option value="25">25</option>
@@ -64,8 +64,8 @@
 					<div class="text-gray-900">{{ $teacher->username }}</div>
 				</x-td>
 				<x-td class="text-right text-sm font-medium">
-					<div class="flex items-center justify-end space-x-2">
-						<x-jet-dropdown>
+					<div class="flex items-center justify-end space-x-2 relative">
+						<x-jet-dropdown align="right" width="48">
 							<x-slot name="trigger">
 								<x-jet-secondary-button>{{ __('Riwayat') }}</x-jet-secondary-button>
 							</x-slot>
@@ -74,20 +74,20 @@
 								<x-jet-dropdown-link href="{{ route('scoring.index', $teacher->id) }}">{{ __('Penilaian') }}</x-jet-dropdown-link>
 							</x-slot>
 						</x-jet-dropdown>
-						<x-buttons.button-profile href="{{ route('teacher.show', $teacher->id) }}" />
-					</x-td>
-				</tr>
-				@empty
-				<x-empty-records :colspan="5" />
-				@endforelse
-			</x-slot>
-		</x-table>
-		
-		@if($teachers->hasPages())
-		<div class="mt-4 px-4">
-			{{ $teachers->links() }}
-		</div>
-		@endif
-		
-	</div>
+						<x-buttons.button-profile href="{{ route('teacher.show', $teacher->id) }}"></x-buttons.button-profile>
+					</div>
+				</x-td>
+			</tr>
+			@empty
+			<x-empty-records :colspan="5" />
+			@endforelse
+		</x-slot>
+	</x-table>
 	
+	@if($teachers->hasPages())
+	<div class="mt-4 px-4">
+		{{ $teachers->links() }}
+	</div>
+	@endif
+	
+</div>
