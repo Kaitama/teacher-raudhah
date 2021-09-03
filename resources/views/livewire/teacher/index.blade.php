@@ -2,8 +2,8 @@
 	
 	<div class="px-4">
 		<x-alert type="{{ $alert['type'] }}" on="deleted">
-			<x-slot name="title">{{ $alert['title'] }}</x-slot>
-			<x-slot name="content">{{ $alert['message'] }}</x-slot>
+			<x-slot name="title">{{ $alert['title'] ?? '' }}</x-slot>
+			<x-slot name="content">{{ $alert['message'] ?? '' }}</x-slot>
 		</x-alert>
 	</div>
 	
