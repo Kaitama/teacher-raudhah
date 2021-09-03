@@ -9,7 +9,7 @@ class Profile extends Model
 {
 	use HasFactory;
 	
-	protected $table = 'Userprofiles';
+	protected $table = 'userprofiles';
 	protected $guarded = [];
 	protected $dates = ['birthdate'];
 	

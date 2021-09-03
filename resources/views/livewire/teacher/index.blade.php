@@ -15,8 +15,13 @@
 				<option value="50">50</option>
 				<option value="100">100</option>
 			</x-select>
-			<x-jet-input type="text" class="block w-full md:w-72" placeholder="Cari disini.." wire:model="search" />
+			<x-select wire:model="select_gender" class="w-40">
+				<option value="">{{ __('Semua Guru') }}</option>
+				<option value="1">{{ __('Laki-laki') }}</option>
+				<option value="2">{{ __('Perempuan') }}</option>
+			</x-select>
 		</div>
+		<x-jet-input type="text" class="block w-full md:w-96" placeholder="Cari disini.." wire:model="search" />
 	</div>
 	
 	<x-table class="mt-4 px-0 md:px-4">

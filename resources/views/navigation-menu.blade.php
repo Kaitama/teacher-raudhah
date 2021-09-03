@@ -184,6 +184,14 @@
 		<x-jet-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
 			{{ __('Dashboard') }}
 		</x-jet-responsive-nav-link>
+		@role('guru')
+		<x-jet-responsive-nav-link href="{{ route('history.attendance') }}" :active="request()->routeIs('history.*')">
+			{{ __('Riwayat') }}
+		</x-jet-responsive-nav-link>
+		<x-jet-responsive-nav-link href="{{ route('dashboard.profile') }}" :active="request()->routeIs('dashboard.profile') || request()->routeIs('profile.*')">
+			{{ __('Profil') }}
+		</x-jet-responsive-nav-link>
+		@endrole
 		@hasanyrole('developer|administrator|supervisor')
 		<x-jet-responsive-nav-link href="{{ route('teacher.index') }}" :active="request()->routeIs('teacher.*')">
 			{{ __('Data Guru') }}
@@ -208,8 +216,13 @@
 		
 		<div class="mt-3 space-y-1">
 			<!-- Account Management -->
+			@if(Auth::user()->nig()->exists())
+			<x-jet-responsive-nav-link href="{{ route('profile.edit') }}" :active="request()->routeIs('profile.edit')">
+				{{ __('Edit Profil') }}
+			</x-jet-responsive-nav-link>
+			@endif
 			<x-jet-responsive-nav-link href="{{ route('profile.show') }}" :active="request()->routeIs('profile.show')">
-				{{ __('Profile') }}
+				{{ __('Edit Akun') }}
 			</x-jet-responsive-nav-link>
 			
 			@if (Laravel\Jetstream\Jetstream::hasApiFeatures())
