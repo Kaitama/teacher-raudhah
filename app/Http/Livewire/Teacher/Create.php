@@ -10,9 +10,9 @@ class Create extends Component
 {
 	use WithPagination;
 
-	public $addNIGModal = false;
+	public $addNIGModal = false, $deleteNIGModal = false, $editNIGModal = false;
 	
-	public $nigs;
+	public $nigs, $nig, $data_edit, $number_to_update;
 	
 	protected $rules = [
 		'nigs'	=> 'required',
@@ -48,5 +48,35 @@ class Create extends Component
 		$this->reset('nigs');
 		$this->emit('saved');
 		
+	}
+
+	public function editing(TeacherNig $nig){
+		$this->data_edit = $nig;
+		$this->number_to_update = $nig->number;
+		$this->editNIGModal = true;
+	}
+
+	public function update(){
+		$this->validate([
+			'number_to_update' => 'required|unique:teacher_nigs,number,' . $this->data_edit->id,
+		], [
+			'number_to_update.required'	=> 'NIG tidak boleh kosong.',
+			'number_to_update.unique'	=> 'NIG sudah terdaftar.'
+		]);
+		$this->data_edit->update([
+			'number'	=> $this->number_to_update,
+		]);
+		$this->reset('data_edit', 'number_to_update', 'editNIGModal');
+	}
+
+	public function confirmDelete(TeacherNig $nig){
+		$this->nig = $nig;
+		$this->deleteNIGModal = true;
+	}
+
+	public function destroy(){
+		$this->nig->delete();
+		$this->reset('nig');
+		$this->deleteNIGModal = false;
 	}
 }

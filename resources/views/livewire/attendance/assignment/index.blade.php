@@ -1,7 +1,7 @@
 <div class="py-4">
 	
 	<div class="px-4 flex flex-col md:flex-row md:items-center items-end md:justify-between">
-
+		
 		<div class="flex flex-row space-x-2">
 			<x-select wire:model="perpage" class="w-1/8">
 				<option value="25">25</option>
@@ -10,12 +10,12 @@
 			</x-select>
 			<x-jet-input type="text" class="block w-full md:w-72" placeholder="Cari disini.." wire:model="search" />
 		</div>
-		@role('developer|administrator')
+		@can('c a penugasan')
 		<x-button-link class="mt-4 md:mt-0" href="{{ route('assignment.create') }}">{{ __('Tambah Penugasan') }}</x-button-link>
-		@endrole
+		@endcan
 	</div>
-		
-		
+	
+	
 	
 	<x-table class="mt-4 px-0 md:px-4">
 		<x-slot name="th">
@@ -23,9 +23,7 @@
 			<x-th>{{ __('Tanggal') }}</x-th>
 			<x-th>{{ __('Penugasan') }}</x-th>
 			<x-th>{{ __('Data Guru') }}</x-th>
-			@role('developer|administrator')
 			<x-th></x-th>
-			@endrole
 		</x-slot>
 		<x-slot name="td">
 			@forelse ($assignments as $k => $assign)
@@ -48,14 +46,16 @@
 						{{ $assign->ended_at ? 'tanggal ' . $assign->ended_at->format('d/m/Y') : 'sekarang' }}
 					</div>
 				</x-td>
-				@role('developer|administrator')
 				<x-td class="text-right text-sm font-medium">
 					<div class="flex space-x-4 flex-row justify-end">
-						<x-buttons.button-edit href="{{ route('assignment.edit', $assign->id) }}" />
-						<x-buttons.button-delete wire:click="confirmDelete({{ $assign->id }})" />
+						@can('u a penugasan')
+						<x-buttons.button-edit href="{{ route('assignment.edit', $assign->id) }}"></x-buttons.button-edit>
+						@endcan
+						@can('d a penugasan')
+						<x-buttons.button-delete wire:click="confirmDelete({{ $assign->id }})"></x-buttons.button-delete>
+						@endcan
 					</div>
 				</x-td>
-				@endrole
 			</tr>
 			@empty
 			<x-empty-records :colspan="5" />
@@ -68,8 +68,8 @@
 		{{ $assignments->links() }}
 	</div>
 	@endif
-
-
+	
+	@can('d a penugasan')
 	<x-jet-confirmation-modal wire:model="modal_confirmation">
 		<x-slot name="title">{{ __('Konfirmasi Hapus Penugasan') }}</x-slot>
 		<x-slot name="content">
@@ -88,4 +88,5 @@
 			</x-jet-danger-button>
 		</x-slot>
 	</x-jet-confirmation-modal>
+	@endcan
 </div>

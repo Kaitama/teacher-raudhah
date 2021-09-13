@@ -18,6 +18,8 @@
 				@livewire('teacher.history.assignment', ['id' => Auth::id()])
 				<x-jet-section-border />
 				@livewire('teacher.history.permit', ['id' => Auth::id()])
+				<x-jet-section-border />
+				@livewire('teacher.history.evaluation', ['id' => Auth::id()])
 			</div>
 		</div>
 	</div>

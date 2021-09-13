@@ -22,9 +22,7 @@
 			<x-th class="text-center">
 				{{ __('HRF') }}
 			</x-th>
-			@unlessrole('guru|supervisor')
 			<x-th></x-th>
-			@endunlessrole
 		</x-slot>
 		<x-slot name="td">
 			
@@ -57,21 +55,19 @@
 						{{ $hrf }}
 					</div>
 				</x-td>
-				@unlessrole('guru|supervisor')
 				<x-td class="text-right text-sm font-medium">
 					<div class="flex space-x-4 flex-row justify-end">
-						<x-buttons.button-edit href="{{ route('scoring.edit', [$teacher->id, $score->id, 2]) }}" />
-						<x-buttons.button-delete wire:click="confirmDelete({{$score->id}})" />
+						@can('u a penilaian')
+						<x-buttons.button-edit href="{{ route('scoring.edit', [$teacher->id, $score->id, 2]) }}"></x-buttons.button-edit>
+						@endcan
+						@can('d a penilaian')
+						<x-buttons.button-delete wire:click="confirmDelete({{$score->id}})"></x-buttons.button-delete>
+						@endcan
 					</div>
 				</x-td>
-				@endunlessrole
 			</tr>
 			@empty
-			@unlessrole('guru|supervisor')
 			<x-empty-records colspan="{{ 5 + count($categories) }}" />
-			@else
-			<x-empty-records colspan="{{ 4 + count($categories) }}" />
-			@endunlessrole
 			@endforelse
 			
 		</x-slot>
@@ -93,8 +89,8 @@
 			<li>{{ __('HRF : Nilai Huruf') }}</li>
 		</ul>
 	</div>
-
-
+	
+	@can('d a penilaian')
 	<x-jet-confirmation-modal wire:model="confirmation_modal">
 		<x-slot name="title">{{ __('Konfirmasi Hapus Penilaian') }}</x-slot>
 		<x-slot name="content">
@@ -111,5 +107,5 @@
 			</x-jet-danger-button>
 		</x-slot>
 	</x-jet-confirmation-modal>
-
+	@endcan
 </div>

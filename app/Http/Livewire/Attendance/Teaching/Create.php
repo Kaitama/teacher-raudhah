@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Attendance\Teaching;
 use Livewire\Component;
 use App\Models\Userteaching;
 use Carbon\Carbon;
+use Auth;
 
 class Create extends Component
 {
@@ -52,6 +53,7 @@ class Create extends Component
 		foreach ($this->teachers as $teacher) {
 			Userteaching::create([
 				'user_id'	=> $teacher['id'],
+				'checked_by'	=> Auth::id(),
 				'category'	=> $this->category,
 				'description'	=> $this->description,
 				'signed_at'	=> Carbon::createFromFormat('d/m/Y', $this->signed_at)->format('Y-m-d'),

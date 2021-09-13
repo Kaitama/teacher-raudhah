@@ -7,12 +7,16 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\User;
+use App\Exports\TeacherProfilesExport;
+use Maatwebsite\Excel\Facades\Excel;
+
 
 class Index extends Component
 {
 	use WithPagination;
 	
 	public $confirm_delete = false;
+	public $teachers_collection;
 	public $user;
 	public $alert;
 	public $search;
@@ -27,7 +31,6 @@ class Index extends Component
 		if(strlen($this->search) >= 3){
 			$teachers = User::where('name', 'like', $s)
 				->orWhere('email', 'like', $s)
-			->orWhere('username', 'like', $s)
 			->orWhereHas('nig', function($q) use($s){
 				$q->where('number', 'like', $s);
 			})
@@ -52,11 +55,19 @@ class Index extends Component
 			});
 		}
 
+		// set teachers available for export
+		$this->teachers_collection = $teachers;
+
 		// creating pagination
 		$items = $teachers->forPage($this->page, $this->perpage)->values();
 		$teachers = new LengthAwarePaginator($items, $teachers->count(), $this->perpage, $this->page);
 
 		return view('livewire.teacher.index', ['teachers' => $teachers]);
+	}
+
+	public function exportExcel(){
+		$export = new TeacherProfilesExport($this->teachers_collection);
+		return Excel::download($export, 'DATA_GURU_' . time() . '.xlsx');
 	}
 	
 	

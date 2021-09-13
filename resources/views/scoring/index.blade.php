@@ -5,12 +5,12 @@
 				<x-link href="{{ route('teacher.index') }}">{{ __('Data Guru') }}</x-link> / 	{{ __('Penilaian Guru') }}
 			</h2>
 			<div class="space-x-4">
-				@role('developer|administrator')
+				@can('c a penilaian')
 				<x-nav-link-settings href="{{ route('scoring.create', ['id' => $id]) }}">{{ __('Tambah Penilaian') }}</x-nav-link-settings>
-				@endrole
-				@role('developer|administrator|supervisor')
+				@endcan
+				@can('r a excel')
 				<x-nav-link-settings href="{{ route('excel.nilai', $id) }}">{{ __('Export Excel') }}</x-nav-link-settings>
-				@endrole
+				@endcan
 			</div>
 		</div>
 	</x-slot>

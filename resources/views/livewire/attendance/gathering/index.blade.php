@@ -9,9 +9,9 @@
 			</x-select>
 			<x-jet-input type="text" class="block w-full md:w-72" placeholder="Cari disini.." wire:model="search" />
 		</div>
-		@role('developer|administrator')
+		@can('c a kumpul')
 		<x-button-link class="mt-4 md:mt-0" href="{{ route('gathering.create') }}">{{ __('Tambah Kegiatan') }}</x-button-link>
-		@endrole
+		@endcan
 	</div>
 	
 	
@@ -44,44 +44,48 @@
 				</x-td>
 				<x-td class="text-right text-sm font-medium">
 					<div class="flex space-x-4 flex-row justify-end">
-						<x-buttons.button-show href="{{ route('gathering.show', $gath->id) }}" />
-							@role('developer|administrator')
-							<x-buttons.button-edit href="{{ route('gathering.edit', $gath->id) }}" />
-								<x-buttons.button-delete wire:click="confirmDelete({{ $gath->id }})" />
-									@endrole
-								</div>
-							</x-td>
-						</tr>
-						@empty
-						<x-empty-records :colspan="5" />
-						@endforelse
-					</x-slot>
-				</x-table>
-				
-				@if($gatherings->hasPages())
-				<div class="mt-4 px-4">
-					{{ $gatherings->links() }}
-				</div>
-				@endif
-				
-				
-				<x-jet-confirmation-modal wire:model="modal_confirmation">
-					<x-slot name="title">{{ __('Konfirmasi Hapus Kegiatan') }}</x-slot>
-					<x-slot name="content">
-						@if ($item)
-						<p>{{ __('Anda yakin ingin menghapus data kegiatan ') }} <span class="text-red-600 font-medium">{{ $item->name ?? '' }}</span> {{ __(' pada tanggal ') }} <span class="text-red-600 font-medium">{{ $item->held_at->isoFormat('LL') }}</span>?</p>
-						@endif
-					</x-slot>
-					
-					<x-slot name="footer">
-						<x-jet-secondary-button wire:click="$toggle('modal_confirmation')" wire:loading.attr="disabled">
-							{{ __('Batal') }}
-						</x-jet-secondary-button>
-						
-						<x-jet-danger-button class="ml-2" wire:click="destroy" wire:loading.attr="disabled">
-							{{ __('Ya, Hapus!') }}
-						</x-jet-danger-button>
-					</x-slot>
-				</x-jet-confirmation-modal>
-			</div>
+						@can('r a kumpul')
+						<x-buttons.button-show href="{{ route('gathering.show', $gath->id) }}"></x-buttons.button-show>
+						@endcan
+						@can('u a kumpul')
+						<x-buttons.button-edit href="{{ route('gathering.edit', $gath->id) }}"></x-buttons.button-edit>
+						@endcan
+						@can('d a kumpul')
+						<x-buttons.button-delete wire:click="confirmDelete({{ $gath->id }})"></x-buttons.button-delete>
+						@endcan
+					</div>
+				</x-td>
+			</tr>
+			@empty
+			<x-empty-records :colspan="5" />
+			@endforelse
+		</x-slot>
+	</x-table>
+	
+	@if($gatherings->hasPages())
+	<div class="mt-4 px-4">
+		{{ $gatherings->links() }}
+	</div>
+	@endif
+	
+	@can('d a kumpul')
+	<x-jet-confirmation-modal wire:model="modal_confirmation">
+		<x-slot name="title">{{ __('Konfirmasi Hapus Kegiatan') }}</x-slot>
+		<x-slot name="content">
+			@if ($item)
+			<p>{{ __('Anda yakin ingin menghapus data kegiatan ') }} <span class="text-red-600 font-medium">{{ $item->name ?? '' }}</span> {{ __(' pada tanggal ') }} <span class="text-red-600 font-medium">{{ $item->held_at->isoFormat('LL') }}</span>?</p>
+			@endif
+		</x-slot>
+		
+		<x-slot name="footer">
+			<x-jet-secondary-button wire:click="$toggle('modal_confirmation')" wire:loading.attr="disabled">
+				{{ __('Batal') }}
+			</x-jet-secondary-button>
 			
+			<x-jet-danger-button class="ml-2" wire:click="destroy" wire:loading.attr="disabled">
+				{{ __('Ya, Hapus!') }}
+			</x-jet-danger-button>
+		</x-slot>
+	</x-jet-confirmation-modal>
+	@endcan
+</div>

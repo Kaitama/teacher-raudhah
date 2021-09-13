@@ -4,12 +4,11 @@ namespace App\Http\Livewire\Excel;
 
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use App\Imports\AbsensiImport;
+use App\Imports\ScoringImport;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Storage;
 
-
-class ImportData extends Component
+class ImportScoring extends Component
 {
 	use WithFileUploads;
 	
@@ -18,10 +17,10 @@ class ImportData extends Component
 	
 	public function render()
 	{
-		return view('livewire.excel.import-data');
+		return view('livewire.excel.import-scoring');
 	}
 
-	public function importExcel(){
+	public function importScoring(){
 		$this->validate([
 			'excel'	=> 'required|file|mimes:xls,xlsx'
 		], [
@@ -30,12 +29,13 @@ class ImportData extends Component
 			'excel.mimes'	=> 'Hanya file Excel yang dapat diupload.'
 		]);
 
-		$import =  Excel::import(new AbsensiImport, $this->excel);
-		$this->excel = null;
+		$import =  Excel::import(new ScoringImport, $this->excel);
+		$this->reset('excel');
 		$this->emit('saved');
 	}
 
 	public function downloadTemplate(){
-		return Storage::disk('public')->download('excel/TEMPLATE_PERIZINAN.xlsx', 'TEMPLATE_PERIZINAN_' . time() . '.xlsx');
+		return Storage::disk('public')->download('excel/TEMPLATE_PENILAIAN.xlsx', 'TEMPLATE_PENILAIAN_' . time() . '.xlsx');
 	}
+
 }

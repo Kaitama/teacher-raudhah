@@ -7,7 +7,7 @@
 		</x-alert>
 	</div>
 	
-	<div class="px-4 flex flex-col md:flex-row md:items-center items-end md:justify-between">
+	<div class="px-4 flex flex-col space-y-2 md:space-y-0 md:flex-row md:items-center items-end md:justify-between">
 		
 		<div class="flex flex-row space-x-2">
 			<x-select wire:model="perpage" class="w-1/8">
@@ -20,6 +20,7 @@
 				<option value="1">{{ __('Laki-laki') }}</option>
 				<option value="2">{{ __('Perempuan') }}</option>
 			</x-select>
+			<x-jet-button type="button" wire:click="exportExcel" class="block bg-green-600 hover:bg-green-700 w-full active:bg-green-700 focus:outline-none focus:border-green-700 focus:ring-green-200">{{ __('Export Excel') }}</x-jet-button>
 		</div>
 		<x-jet-input type="text" class="block w-full md:w-96" placeholder="Cari disini.." wire:model="search" />
 	</div>
@@ -29,7 +30,6 @@
 			<x-th>{{ __('#') }}</x-th>
 			<x-th>{{ __('Nama Lengkap') }}</x-th>
 			<x-th>{{ __('Kontak') }}</x-th>
-			<x-th>{{ __('Username') }}</x-th>
 			<x-th></x-th>
 		</x-slot>
 		<x-slot name="td">
@@ -60,15 +60,19 @@
 					<div class="text-sm text-gray-900">{{ $teacher->profile->phone ?? '-' }}</div>
 					<div class="text-sm text-gray-500">{{ $teacher->email }}</div>
 				</x-td>
-				<x-td>
-					<div class="text-gray-900">{{ $teacher->username }}</div>
-				</x-td>
 				<x-td class="text-right text-sm font-medium">
 					<div class="flex items-center justify-end space-x-2">
+						@can('m a absensi')
 						<x-button-link-secondary href="{{ route('teacher.history.index', $teacher->id) }}">{{ __('Absensi') }}</x-button-link-secondary>
+						@endcan
+
+						@can('m a penilaian')
 						<x-button-link-secondary href="{{ route('scoring.index', $teacher->id) }}">{{ __('Penilaian') }}</x-button-link-secondary>
+						@endcan
 						
+						@can('r a guru')
 						<x-buttons.button-profile href="{{ route('teacher.show', $teacher->id) }}"></x-buttons.button-profile>
+						@endcan
 					</div>
 				</x-td>
 			</tr>

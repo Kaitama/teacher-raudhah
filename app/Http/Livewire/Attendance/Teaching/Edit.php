@@ -6,6 +6,7 @@ use Livewire\Component;
 use App\Models\Userteaching;
 use App\Models\User;
 use Carbon\Carbon;
+use Auth;
 
 class Edit extends Component
 {
@@ -23,6 +24,11 @@ class Edit extends Component
 	
 	public function mount($id){
 		$teaching = Userteaching::find($id);
+		if (Auth::id() != $teaching->checker->id) {
+			if (!Auth::user()->hasAnyRole(['developer', 'administrator', 'admin akademik'])) {
+				return abort(403);
+			}
+		}
 		$this->categories = Userteaching::categoryOptions();
 		$this->teaching = $teaching;
 		$this->signed_at = $teaching->signed_at->format('d/m/Y');
@@ -39,6 +45,11 @@ class Edit extends Component
 			'description'	=> $this->description,
 			'signed_at'	=> Carbon::createFromFormat('d/m/Y', $this->signed_at)->format('Y-m-d'),
 		]);
+		if (!$this->teaching->checker) {
+			$this->teaching->update([
+				'checked_by'	=> Auth::id(),
+			]);
+		}
 		$this->emit('saved');
 	}
 	

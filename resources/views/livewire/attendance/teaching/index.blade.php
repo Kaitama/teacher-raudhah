@@ -1,7 +1,7 @@
 <div class="py-4">
 	
 	<div class="px-4 flex flex-col md:flex-row md:items-center items-end md:justify-between">
-
+		
 		<div class="flex flex-row space-x-2">
 			<x-select wire:model="perpage" class="w-1/8">
 				<option value="25">25</option>
@@ -10,12 +10,12 @@
 			</x-select>
 			<x-jet-input type="text" class="block w-full md:w-72" placeholder="Cari disini.." wire:model="search" />
 		</div>
-		@role('developer|administrator')
+		@can('c a absensi')
 		<x-button-link class="mt-4 md:mt-0" href="{{ route('teaching.create') }}">{{ __('Tambah Absensi') }}</x-button-link>
-		@endrole
+		@endcan
 	</div>
-		
-		
+	
+	
 	
 	<x-table class="mt-4 px-0 md:px-4">
 		<x-slot name="th">
@@ -23,9 +23,7 @@
 			<x-th>{{ __('Tanggal') }}</x-th>
 			<x-th>{{ __('Data Guru') }}</x-th>
 			<x-th>{{ __('Izin') }}</x-th>
-			@role('developer|administrator')
 			<x-th></x-th>
-			@endrole
 		</x-slot>
 		<x-slot name="td">
 			@forelse ($teachings as $k => $teaching)
@@ -34,6 +32,9 @@
 				<x-td>
 					<div class="text-gray-900">
 						{{ $teaching->signed_at->isoFormat('LL') }}
+					</div>
+					<div class="text-gray-600 text-sm">
+						{{ $teaching->checker ? $teaching->checker->name : ''  }}
 					</div>
 				</x-td>
 				<x-td>
@@ -46,14 +47,20 @@
 					<div class="text-gray-900 text-sm font-semibold">{{ $categories[$teaching->category] }}</div>
 					<div class="text-gray-600 text-sm">{{ $teaching->description ?? '-' }}</div>
 				</x-td>
-				@role('developer|administrator')
 				<x-td class="text-right text-sm font-medium">
 					<div class="flex space-x-4 flex-row justify-end">
-						<x-buttons.button-edit href="{{ route('teaching.edit', $teaching->id) }}" />
-						<x-buttons.button-delete wire:click="confirmDelete({{ $teaching->id }})" />
+						@can('u a absensi')
+						@if(($teaching->checker && Auth::id() == $teaching->checker->id) || Auth::user()->hasAnyRole(['developer', 'administrator', 'admin akademik']))
+						<x-buttons.button-edit href="{{ route('teaching.edit', $teaching->id) }}"></x-buttons.button-edit>
+						@endif
+						@endcan
+						@can('d a absensi')
+						@if(($teaching->checker && Auth::id() == $teaching->checker->id) || Auth::user()->hasAnyRole(['developer', 'administrator', 'admin akademik']))
+						<x-buttons.button-delete wire:click="confirmDelete({{ $teaching->id }})"></x-buttons.button-delete>
+						@endif
+						@endcan
 					</div>
 				</x-td>
-				@endrole
 			</tr>
 			@empty
 			<x-empty-records :colspan="5" />
@@ -66,8 +73,8 @@
 		{{ $teachings->links() }}
 	</div>
 	@endif
-
-
+	
+	@can('d a absensi')
 	<x-jet-confirmation-modal wire:model="modal_confirmation">
 		<x-slot name="title">{{ __('Konfirmasi Hapus Absensi') }}</x-slot>
 		<x-slot name="content">
@@ -86,4 +93,5 @@
 			</x-jet-danger-button>
 		</x-slot>
 	</x-jet-confirmation-modal>
+	@endcan
 </div>

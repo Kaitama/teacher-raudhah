@@ -30,26 +30,39 @@
 				</div>
 				@endif
 				@endrole
-				@hasanyrole('developer|administrator|supervisor')
+				@can('r a guru')
 				<div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
 					<x-jet-nav-link href="{{ route('teacher.index') }}" :active="request()->routeIs('teacher.*') || request()->routeIs('scoring.*')">
 						{{ __('Data Guru') }}
 					</x-jet-nav-link>
 				</div>
-				
+				@endcan
+				@can('m a absensi')
+				@php
+				$route = null;
+				if(Auth::user()->hasPermissionTo('r a kumpul') || Auth::user()->hasAnyRole('developer', 'administrator')){
+					$route = route('gathering.index');
+				}
+				elseif(Auth::user()->hasPermissionTo('r a absensi')){
+					$route = route('teaching.index');
+				} 
+				else {
+					$route = route('permit.index');
+				}
+				@endphp
 				<div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-					<x-jet-nav-link href="{{ route('gathering.index') }}" :active="request()->routeIs('gathering.*') || request()->routeIs('permit.*') || request()->routeIs('assignment.*') || request()->routeIs('teaching.*') || request()->routeIs('evaluation.*')">
+					<x-jet-nav-link href="{{ $route }}" :active="request()->routeIs('gathering.*') || request()->routeIs('permit.*') || request()->routeIs('assignment.*') || request()->routeIs('teaching.*') || request()->routeIs('evaluation.*')">
 						{{ __('Absensi') }}
 					</x-jet-nav-link>
 				</div>
-				@endhasanyrole
-				@hasanyrole('developer|administrator|supervisor')
+				@endcan
+				@can('r a excel')
 				<div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
 					<x-jet-nav-link href="{{ route('excel.index') }}" :active="request()->routeIs('excel.*')">
 						{{ __('Data Excel') }}
 					</x-jet-nav-link>
 				</div>
-				@endhasanyrole
+				@endcan
 			</div>
 			
 			<div class="hidden sm:flex sm:items-center sm:ml-6">
@@ -131,7 +144,7 @@
 							<div class="block px-4 py-2 text-xs text-gray-400">
 								{{ __('Pengaturan') }}
 							</div>
-
+							
 							@if(Auth::user()->nig()->exists())
 							<x-jet-dropdown-link href="{{ route('profile.edit') }}">
 								{{ __('Edit Profil') }}
@@ -148,9 +161,20 @@
 							</x-jet-dropdown-link>
 							@endif
 							
+							@role('developer')
 							<div class="border-t border-gray-100"></div>
 							
+							<!-- Developer Menu -->
+							<div class="block px-4 py-2 text-xs text-gray-400">
+								{{ __('Dev Menu') }}
+							</div>
 							
+							<x-jet-dropdown-link href="{{ route('permission.index') }}">
+								{{ __('Edit Permission') }}
+							</x-jet-dropdown-link>
+							@endrole
+							
+							<div class="border-t border-gray-100"></div>
 							<!-- Authentication -->
 							<form method="POST" action="{{ route('logout') }}">
 								@csrf
@@ -192,11 +216,21 @@
 			{{ __('Profil') }}
 		</x-jet-responsive-nav-link>
 		@endrole
-		@hasanyrole('developer|administrator|supervisor')
+		@can('r a guru')
 		<x-jet-responsive-nav-link href="{{ route('teacher.index') }}" :active="request()->routeIs('teacher.*')">
 			{{ __('Data Guru') }}
 		</x-jet-responsive-nav-link>
-		@endhasanyrole
+		@endcan
+		@can('m a absensi')
+		<x-jet-responsive-nav-link href="{{ $route }}" :active="request()->routeIs('gathering.*') || request()->routeIs('permit.*') || request()->routeIs('assignment.*') || request()->routeIs('teaching.*') || request()->routeIs('evaluation.*')">
+			{{ __('Absensi') }}
+		</x-jet-responsive-nav-link>
+		@endcan
+		@can('r a excel')
+		<x-jet-responsive-nav-link href="{{ route('excel.index') }}" :active="request()->routeIs('excel.*')">
+			{{ __('Data Excel') }}
+		</x-jet-responsive-nav-link>
+		@endcan
 	</div>
 	
 	<!-- Responsive Settings Options -->

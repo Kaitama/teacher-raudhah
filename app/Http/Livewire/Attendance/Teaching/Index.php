@@ -38,11 +38,16 @@ class Index extends Component
 				$q->where('name', 'like', $s);
 			})
 			->with('user.nig')
+			->with('checker')
 			->orderByDesc('signed_at')
 			->orderByDesc('created_at')
 			->paginate($this->perpage);
 		} else {
-			$teachings = Userteaching::with(['user', 'user.nig'])->orderByDesc('signed_at')->orderByDesc('created_at')->paginate($this->perpage);
+			$teachings = Userteaching::with(['user', 'user.nig'])
+			->with('checker')
+			->orderByDesc('signed_at')
+			->orderByDesc('created_at')
+			->paginate($this->perpage);
 		}
 		return view('livewire.attendance.teaching.index', ['teachings' => $teachings]);
 	}

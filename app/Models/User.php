@@ -115,12 +115,16 @@ class User extends Authenticatable
 		return $this->hasMany(Teachingscore::class);
 	}
 
+	public function checkers(){
+		return $this->hasMany(Userteaching::class, 'id', 'checked_by');
+	}
+
 	public function managementScores(){
 		return $this->hasMany(Managementscore::class);
 	}
 	
-	public function roles(){
-		return $this->belongsToMany(Role::class, 'model_has_roles', 'model_id', 'role_id');
-	}
+	// public function roles(){
+	// 	return $this->belongsToMany(Role::class, 'model_has_roles', 'model_id', 'role_id');
+	// }
 
 }

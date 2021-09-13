@@ -9,11 +9,19 @@
 	
 	<div class="py-12">
 		<div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
-			@role('developer|administrator')
-			@livewire('excel.import-data')
+			@can('c a excel')
+			<div class="mb-8 md:mb-0">
+				@livewire('excel.import-data')
+			</div>
 			<x-jet-section-border />
-			@endrole
-			@livewire('excel.export-data')
+			<div class="mb-8 md:mb-0">
+				@livewire('excel.import-scoring')
+			</div>
+			<x-jet-section-border />
+			@endcan
+			<div class="mb-8 md:mb-0">
+				@livewire('excel.export-data')
+			</div>
 		</div>
 	</div>
 </x-app-layout>

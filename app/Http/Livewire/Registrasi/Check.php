@@ -7,7 +7,7 @@ use App\Models\User;
 use App\Models\Profile;
 use App\Models\Userpartner;
 use App\Models\TeacherNig;
-use App\Models\Role;
+use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 
@@ -62,7 +62,7 @@ class Check extends Component
 		$role = Role::where('name', 'guru')->first();
 		$setRole = DB::table('model_has_roles')->insert([
 			'role_id' 	=> $role->id,
-			'model_type'	=> 'App\User',
+			'model_type'	=> 'App\Models\User',
 			'model_id'	=> $user->id,
 		]);
 		$teacherNig = TeacherNig::where('number', $this->nig)->update([

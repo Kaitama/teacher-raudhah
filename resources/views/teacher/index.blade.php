@@ -5,11 +5,11 @@
 					{{ __('Data Guru') }}
 			</h2>
 			<div class="flex flex-col space-y-2 mt-3 md:mt-0 md:space-y-0 md:flex-row md:space-x-2">
-				@role('developer|administrator')
+				@can('c a guru')
 				<x-nav-link-settings href="{{ route('teacher.create') }}" :active="request()->routeIs('gathering.*')">
 				{{ __('Daftar NIG') }}
 				</x-nav-link-settings>
-				@endrole
+				@endcan
 			</div>
 		</div>
 	</x-slot>

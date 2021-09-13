@@ -1,9 +1,9 @@
-<x-jet-form-section submit="importExcel" x-data="{excelName: null, excelPreview: null}">
-	<x-slot name="title">{{ __('Import Excel Perizinan Guru') }}</x-slot>
+<x-jet-form-section submit="importScoring" x-data="{excelName: null, excelPreview: null}">
+	<x-slot name="title">{{ __('Import Excel Penilaian Guru') }}</x-slot>
 	<x-slot name="description">
-		{{ __('Upload data absensi Perizinan, Penugasan, dan Pengajaran dari file Excel.') }}
+		{{ __('Upload data penilaian Keguruan dan Kepengurusan dari file Excel.') }}
 		<div class="mt-2">
-			<x-jet-secondary-button wire:click.prevent="downloadTemplate">{{ __('Download Template Perizinan') }}</x-jet-secondary-button>
+			<x-jet-secondary-button wire:click.prevent="downloadTemplate">{{ __('Download Template Penilaian') }}</x-jet-secondary-button>
 		</div>
 	</x-slot>
 	
@@ -26,7 +26,7 @@
 					<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
 					</svg>
-					<span class="ml-2" x-text="excelName ?? 'Pilih File Excel Perizinan'"></span>
+					<span class="ml-2" x-text="excelName ?? 'Pilih File Excel Penilaian'"></span>
 				</button>
 			</div>
 		</div>
