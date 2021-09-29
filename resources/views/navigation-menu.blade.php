@@ -1,3 +1,4 @@
+@php $nig_exists = Auth::user()->nig()->exists() @endphp
 <nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
 	<!-- Primary Navigation Menu -->
 	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -17,7 +18,14 @@
 					</x-jet-nav-link>
 				</div>
 				@role('guru')
-				@if(Auth::user()->nig)
+				@if($nig_exists)
+				@if (Auth::user()->classroom)
+				<div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+					<x-jet-nav-link href="{{ route('classroom.index') }}" :active="request()->routeIs('classroom.*') || request()->routeIs('student.*')">
+						{{ __('Kelas') }}
+					</x-jet-nav-link>
+				</div>
+				@endif
 				<div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
 					<x-jet-nav-link href="{{ route('history.attendance') }}" :active="request()->routeIs('history.*')">
 						{{ __('Riwayat') }}
@@ -145,7 +153,7 @@
 								{{ __('Pengaturan') }}
 							</div>
 							
-							@if(Auth::user()->nig()->exists())
+							@if($nig_exists)
 							<x-jet-dropdown-link href="{{ route('profile.edit') }}">
 								{{ __('Edit Profil') }}
 							</x-jet-dropdown-link>
@@ -209,12 +217,19 @@
 			{{ __('Dashboard') }}
 		</x-jet-responsive-nav-link>
 		@role('guru')
+		@if($nig_exists)
+		@if (Auth::user()->classroom)
+		<x-jet-responsive-nav-link href="{{ route('classroom.index') }}" :active="request()->routeIs('classroom.*') || request()->routeIs('student.*')">
+			{{ __('Kelas') }}
+		</x-jet-responsive-nav-link>
+		@endif
 		<x-jet-responsive-nav-link href="{{ route('history.attendance') }}" :active="request()->routeIs('history.*')">
 			{{ __('Riwayat') }}
 		</x-jet-responsive-nav-link>
 		<x-jet-responsive-nav-link href="{{ route('dashboard.profile') }}" :active="request()->routeIs('dashboard.profile') || request()->routeIs('profile.*')">
 			{{ __('Profil') }}
 		</x-jet-responsive-nav-link>
+		@endif
 		@endrole
 		@can('r a guru')
 		<x-jet-responsive-nav-link href="{{ route('teacher.index') }}" :active="request()->routeIs('teacher.*')">
@@ -250,7 +265,7 @@
 		
 		<div class="mt-3 space-y-1">
 			<!-- Account Management -->
-			@if(Auth::user()->nig()->exists())
+			@if($nig_exists)
 			<x-jet-responsive-nav-link href="{{ route('profile.edit') }}" :active="request()->routeIs('profile.edit')">
 				{{ __('Edit Profil') }}
 			</x-jet-responsive-nav-link>

@@ -19,6 +19,12 @@
 			</div>
 			<x-jet-section-border />
 			@endcan
+			@can('u a guru')
+			<div class="mb-8 md:mb-0">
+				@livewire('teacher.setclass')
+			</div>
+			<x-jet-section-border />
+			@endcan
 			<div class="mb-8 md:mb-0">
 				@livewire('excel.export-data')
 			</div>

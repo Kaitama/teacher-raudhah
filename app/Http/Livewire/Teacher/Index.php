@@ -41,9 +41,10 @@ class Index extends Component
 			->role('guru')
 			->with('nig')
 			->with('profile')
+			->with('classroom')
 			->get();
 		} else {
-			$teachers = User::has('nig')->role('guru')->with('nig')->with('profile')->get();
+			$teachers = User::has('nig')->role('guru')->with('nig')->with('profile')->with('classroom')->get();
 		}
 
 		// filter gender

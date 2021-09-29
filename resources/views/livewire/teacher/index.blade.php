@@ -30,6 +30,7 @@
 			<x-th>{{ __('#') }}</x-th>
 			<x-th>{{ __('Nama Lengkap') }}</x-th>
 			<x-th>{{ __('Kontak') }}</x-th>
+			<x-th>{{ __('Kelas') }}</x-th>
 			<x-th></x-th>
 		</x-slot>
 		<x-slot name="td">
@@ -59,6 +60,9 @@
 				<x-td>
 					<div class="text-sm text-gray-900">{{ $teacher->profile->phone ?? '-' }}</div>
 					<div class="text-sm text-gray-500">{{ $teacher->email }}</div>
+				</x-td>
+				<x-td>
+					<div class="text-sm text-gray-900">{{ $teacher->classroom->name ?? '-' }}</div>
 				</x-td>
 				<x-td class="text-right text-sm font-medium">
 					<div class="flex items-center justify-end space-x-2">

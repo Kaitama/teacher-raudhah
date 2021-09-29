@@ -123,8 +123,8 @@ class User extends Authenticatable
 		return $this->hasMany(Managementscore::class);
 	}
 	
-	// public function roles(){
-	// 	return $this->belongsToMany(Role::class, 'model_has_roles', 'model_id', 'role_id');
-	// }
+	public function classroom(){
+		return $this->hasOne(Classroom::class);
+	}
 
 }

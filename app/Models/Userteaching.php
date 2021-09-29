@@ -24,7 +24,7 @@ class Userteaching extends Model
 			return $this->belongsTo(User::class, 'checked_by', 'id');
 		}
 
-		public function classroom(){
-			return $this->belongsTo(Classroom::class);
-		}
+		// public function classroom(){
+		// 	return $this->belongsTo(Classroom::class);
+		// }
 }
