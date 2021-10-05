@@ -12,7 +12,7 @@
 			<x-slot name="left">{{ __('Pendidikan Aktif') }}</x-slot>
 			<x-slot name="right">
 				<div class="text-gray-600">{{ __('Jenjang') }}</div>
-				<div class="font-medium">{{ $educations_level[$edu['level'] - 1] ?? '-' }}</div>
+				<div class="font-medium">{{ $levels[$edu['level']] ?? '-' }}</div>
 			</x-slot>
 		</x-dl>
 		@php $i = $i+1 @endphp
@@ -56,7 +56,7 @@
 			<x-slot name="left">{{ __('Ijazah Terakhir') }}</x-slot>
 			<x-slot name="right">
 				<div class="text-gray-600">{{ __('Jenjang') }}</div>
-				<div class="font-medium">{{ $educations_level[$last['level'] - 1] ?? '-' }}</div>
+				<div class="font-medium">{{ $levels[$last['level']] ?? '-' }}</div>
 			</x-slot>
 		</x-dl>
 		@php $i = $i+1 @endphp
@@ -112,7 +112,7 @@
 						@foreach ($teacher->educations->sortBy('level') as $history)
 						<tr>
 							<x-td>{{ $no++ }}</x-td>
-							<x-td>{{ $educations_level[$history->level - 1] }}</x-td>
+							<x-td>{{ $levels[$history->level] }}</x-td>
 							<x-td>
 								<div class="text-sm font-medium text-gray-900">
 									{{ $history->name ?? '-' }}

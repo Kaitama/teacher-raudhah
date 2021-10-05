@@ -137,6 +137,10 @@
 	</x-jet-form-section>
 	
 	<x-jet-section-border />
+
+	@livewire('setting.educations', ['userId' => $user->id])
+
+	<x-jet-section-border />
 	
 	@livewire('setting.partner', ['userId' => $user->id, 'partner' => $partner])
 	
