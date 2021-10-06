@@ -13,7 +13,7 @@
 				<x-jet-label value="{{ __('Riwayat Pendidikan') }}" />
 				<div class="mt-1 text-sm text-gray-900">
 					<ul class="border border-gray-200 rounded-md divide-y divide-gray-200">
-						@foreach($educations as $k => $education)
+						@forelse($educations as $k => $education)
 						<li class="pl-3 pr-4 py-3 flex items-center justify-between text-sm">
 							<div class="w-0 flex-1 flex items-center">
 								<div class="flex-1 w-0 truncate">
@@ -44,7 +44,11 @@
 								</x-jet-danger-button>
 							</div>
 						</li>
-						@endforeach
+						@empty
+						<li class="pl-3 pr-4 py-3 flex items-center justify-between text-sm text-gray-500 italic">
+							{{ __('Data masih kosong.') }}
+						</li>
+						@endforelse
 					</ul>
 				</div>
 			</div>

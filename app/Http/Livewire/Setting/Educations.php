@@ -41,17 +41,19 @@ class Educations extends Component
 			'semester.digits_between'	=> 'Semester tidak valid.',
 		]);
 		
+		if($this->out == '') $this->out = null;
+
 		Usereducation::create([
 			'user_id'	=> $this->userId,
 			'level'	=> $this->level,
 			'name'	=> $this->name,
-			'faculty'	=> $this->faculty,
-			'focus'	=> $this->focus,
-			'semester'	=> $this->semester,
-			'address'	=> $this->address,
+			'faculty'	=> $this->faculty ?? null,
+			'focus'	=> $this->focus ?? null,
+			'semester'	=> $this->semester ?? null,
+			'address'	=> $this->address ?? null,
 			'in'	=> $this->in,
-			'out'	=> $this->out,
-			'certificate'	=> $this->certificate,
+			'out'	=> $this->out ?? null,
+			'certificate'	=> $this->certificate ?? null,
 		]);
 		
 		$this->add_education = false;

@@ -14,9 +14,9 @@
 				<x-table>
 					<x-slot name="th">
 						<x-th>{{ __('#') }}</x-th>
-						<x-th>{{ __('Sekolah/Lembaga') }}</x-th>
-						<x-th>{{ __('Mulai Tahun') }}</x-th>
-						<x-th>{{ __('Sampai Tahun') }}</x-th>
+						<x-th>{{ __('Instansi / Perusahaan') }}</x-th>
+						<x-th>{{ __('Jabatan / Tahun') }}</x-th>
+						<x-th>{{ __('Keterangan') }}</x-th>
 					</x-slot>
 					<x-slot name="td">
 						@php $no = 1 @endphp
@@ -31,13 +31,18 @@
 											{{ $work->address ?? '-' }}
 										</div>	
 									</x-td>
-									<x-td>{{ $work->in ?? '-' }}</x-td>
 									<x-td>
-										@if($work->out)
-										{{ $work->out }}
-										@else
-										<x-pill color="green">{{ __('Aktif') }}</x-pill>
+										@if($work->position)
+											{{ $work->position ?? '-' }}
 										@endif
+										<div class="text-sm text-gray-500">
+										{{ $work->in ?? '-' }} - {{ $work->out ?? 'Sekarang' }}
+									</div>
+									</x-td>
+									<x-td>
+										<div class="text-sm text-gray-500">
+										{{ $work->description ?? '-' }}
+									</div>
 									</x-td>
 								</tr>
 						@endforeach
