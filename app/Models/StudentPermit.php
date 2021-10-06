@@ -10,4 +10,6 @@ class StudentPermit extends Model
     use HasFactory;
 
 		protected $table = 'permits';
+
+		protected $dates = ['datefrom', 'dateto', 'signdate'];
 }

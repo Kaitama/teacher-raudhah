@@ -10,4 +10,6 @@ class StudentAchievement extends Model
     use HasFactory;
 
 		protected $table = 'achievements';
+
+		protected $dates = ['date'];
 }

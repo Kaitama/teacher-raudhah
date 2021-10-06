@@ -10,4 +10,6 @@ class StudentOffense extends Model
     use HasFactory;
 
 		protected $table = 'offenses';
+
+		protected $dates = ['date'];
 }

@@ -24,7 +24,10 @@
 							{{ $student->dormroom['name'] ?? '-' }}
 						</x-td>
 						<x-td class="text-right">
-							<x-buttons.button-profile href="#"><span class="ml-3">{{ __('Profil Santri') }}</span></x-buttons.button-profile>
+							<div class="flex items-center justify-end">
+								<x-buttons.button-profile href="{{ route('student.show', $student->id) }}"><span class="ml-3">{{ __('Profil') }}</span></x-buttons.button-profile>
+							<x-button-link-secondary href="{{ route('student.history', $student->id) }}" class="ml-3">{{ __('Riwayat') }}</x-button-link-secondary>
+							</div>
 						</x-td>
 					</tr>
 			@empty
