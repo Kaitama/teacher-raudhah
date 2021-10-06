@@ -2,7 +2,7 @@
 	<x-slot name="header">
 		<div class="md:flex md:justify-between md:items-center">
 			<h2 class="font-semibold text-xl text-gray-800 leading-tight">
-				<x-link href="{{ route('classroom.index') }}">{{ __('Kelas') }}</x-link> / {{ request()->routeIs('student.show') ? 'Profil' : 'Riwayat' }} {{ __('Santri') }}
+				@if(Auth::user()->classroom)<x-link href="{{ route('classroom.index') }}">{{ __('Kelas') }}</x-link> / @endif{{ request()->routeIs('student.show') ? 'Profil' : 'Riwayat' }} {{ __('Santri') }}
 			</h2>
 			<div class="flex flex-col space-y-2 mt-3 md:mt-0 md:space-y-0 md:flex-row md:space-x-2">
 				<x-nav-link-settings href="{{ route('student.show', $id) }}" :active="request()->routeIs('student.show')">

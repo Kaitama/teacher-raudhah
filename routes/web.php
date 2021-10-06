@@ -23,6 +23,9 @@ Route::prefix('/dashboard')->middleware(['auth:sanctum', 'verified'])->group(fun
 	Route::get('/classroom/index', function(){
 		return view('classroom.index', ['id' => Auth::user()->classroom->id, 'classname' => Auth::user()->classroom->name]);
 	})->name('classroom.index')->middleware(['role_or_permission:guru|r a guru']);
+	Route::get('/classroom/show/{id}', function($id){
+		return view('classroom.index', ['id' => $id, 'classname' => '']);
+	})->name('classroom.show')->middleware(['permission:r a guru']);
 	Route::get('/student/profile/{id}', function($id){ return view('student.show', ['id' => $id]); })->name('student.show');
 	Route::get('/student/history/{id}', function($id){ return view('student.show', ['id' => $id]); })->name('student.history');
 	// USER HISTORY
@@ -39,7 +42,7 @@ Route::prefix('/dashboard')->middleware(['auth:sanctum', 'verified'])->group(fun
 	// TEACHERS
 	Route::view('/teachers', 'teacher.index')->name('teacher.index');
 	Route::view('/teachers/create', 'teacher.create')->name('teacher.create')->middleware(['permission:c a guru']);
-	Route::get('/teachers/show/{id}', function($id){ return view('teacher.show', ['id' => $id]); })->name('teacher.show');
+	Route::get('/teachers/show/{id}', function($id){ return view('teacher.show', ['id' => $id]); })->name('teacher.show')->middleware(['permission:r a guru']);
 	
 	// ATTENDANCE
 	// GATHERING

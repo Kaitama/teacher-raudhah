@@ -62,7 +62,11 @@
 					<div class="text-sm text-gray-500">{{ $teacher->email }}</div>
 				</x-td>
 				<x-td>
-					<div class="text-sm text-gray-900">{{ $teacher->classroom->name ?? '-' }}</div>
+					@if($teacher->classroom)
+					<x-link href="{{ route('classroom.show', $teacher->classroom->id) }}" class="text-sm font-semibold">{{ $teacher->classroom->name }}</x-link>
+					@else
+					<div class="text-sm text-gray-900">-</div>
+					@endif
 				</x-td>
 				<x-td class="text-right text-sm font-medium">
 					<div class="flex items-center justify-end space-x-2">
