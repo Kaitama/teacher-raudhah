@@ -10,7 +10,7 @@
 				<dl>
 					@php 
 						$i = $i+1; 
-					$photo = $student->gender ? 'male.jpg' : 'female.jpg';	
+					$photo = $student->gender == 'L' ? 'male.jpg' : 'female.jpg';	
 					@endphp
 					<x-dl i={{$i}}>
 						<x-slot name="left"></x-slot>
@@ -45,7 +45,7 @@
 					@php $i = $i+1 @endphp
 					<x-dl i={{$i}}>
 						<x-slot name="left">{{ __('Jenis Kelamin') }}</x-slot>
-						<x-slot name="right">{{ $student->gender ? 'Laki-laki' : 'Perempuan' }}</x-slot>
+						<x-slot name="right">{{ $student->gender == 'L' ? 'Laki-laki' : 'Perempuan' }}</x-slot>
 					</x-dl>
 					@php $i = $i+1 @endphp
 					<x-dl i={{$i}}>
