@@ -52,7 +52,7 @@
 								<x-link class="font-bold" href="{{ route('teacher.show', $teacher->id) }}">{{ ucwords(strtolower($teacher->name)) }}</x-link>
 							</div>
 							<div class="text-sm text-gray-500">
-								{{ $teacher->nig->number }}
+								{{ $teacher->nig ? $teacher->nig->number : '' }}
 							</div>
 						</div>
 					</div>
