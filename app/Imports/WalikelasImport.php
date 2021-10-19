@@ -43,6 +43,12 @@ class SetWalikelas implements ToModel, WithStartRow
 		// 		]);
 		// 	}
 		// }
+
+		if ($olds = Classroom::where('user_id', $teacher->user_id)->get()) {
+			foreach ($olds as $old) {
+				$old->update(['user_id' => null]);
+			}
+		}
 		
 		if($class = Classroom::find($row[3])){
 			$class->update([
