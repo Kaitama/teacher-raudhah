@@ -32,17 +32,20 @@ class SetWalikelas implements ToModel, WithStartRow
 	{
 		
 		$teacher = TeacherNig::where('number', $row[1])->first();
-		if($teacher && !$row[3]){
-			Classroom::where('user_id', $teacher->user_id)->update(['user_id' => null]);
-		}
-		if($teacher && $row[3]){
-			$class = Classroom::find($row[3]);
-			if($class){
-				$class->update([
-					'user_id'	=> $teacher->user_id,
-				]);
-			}
-		}
+		// if($teacher && !$row[3]){
+		// 	Classroom::where('user_id', $teacher->user_id)->update(['user_id' => null]);
+		// }
+		// if($teacher && $row[3]){
+		// 	$class = Classroom::find($row[3]);
+		// 	if($class){
+		// 		$class->update([
+		// 			'user_id'	=> $teacher->user_id,
+		// 		]);
+		// 	}
+		// }
+		Classroom::find($row[3])->update([
+			'user_id'	=> $teacher->user_id,
+		]);
 		return $teacher;
 		
 	}
