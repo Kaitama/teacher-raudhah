@@ -1,8 +1,8 @@
 <div>
 	{{-- tuitions --}}
-	{{-- @livewire('student.history.tuitions', ['student' => $student], key($student->id)) --}}
+	@livewire('student.history.tuitions', ['student' => $student], key($student->id))
 	
-	{{-- <x-jet-section-border /> --}}
+	<x-jet-section-border />
 	
 	
 	{{-- permits --}}

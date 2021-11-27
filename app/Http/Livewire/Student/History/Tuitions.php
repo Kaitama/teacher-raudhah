@@ -13,7 +13,7 @@ class Tuitions extends Component
 
     public function render()
     {
-			$tuitions = $this->student->tuitions()->orderByDesc('foryear')->orderByDesc('formonth')->paginate(10);
+			$tuitions = $this->student->tuitions()->orderByDesc('foryear')->orderByDesc('formonth')->paginate(10, ['*'], 'tuitions');
         return view('livewire.student.history.tuitions', ['tuitions' => $tuitions]);
     }
 }
