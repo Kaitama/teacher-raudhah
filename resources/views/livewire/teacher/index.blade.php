@@ -73,9 +73,15 @@
 						@can('m a absensi')
 						<x-button-link-secondary href="{{ route('teacher.history.index', $teacher->id) }}">{{ __('Absensi') }}</x-button-link-secondary>
 						@endcan
-
+						
 						@can('m a penilaian')
 						<x-button-link-secondary href="{{ route('scoring.index', $teacher->id) }}">{{ __('Penilaian') }}</x-button-link-secondary>
+						<x-jet-secondary-button type="button" wire:click="setTeacher({{ $teacher->id }})">
+							<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+							</svg>
+							{{ __('Rapor') }}
+						</x-jet-secondary-button>
 						@endcan
 						
 						@can('r a guru')
@@ -95,5 +101,24 @@
 		{{ $teachers->links() }}
 	</div>
 	@endif
-	
+
+	@if($guru)
+	<x-jet-dialog-modal wire:model="modalOptions">
+		<x-slot name="title">{{ __('Download Rapor') }} {{ ucwords(strtolower($guru->name ?? '')) }}</x-slot>
+		<x-slot name="content">
+			<div class="mb-3">
+				<label>{{ __('Mulai Tanggal') }}</label>
+				<x-jet-input type="text" wire:model.lazy="started" class="w-full mt-1" />
+			</div>
+			<div class="mb-3">
+				<label>{{ __('Sampai Tanggal') }}</label>
+				<x-jet-input type="text" wire:model.lazy="ended" class="w-full" />
+			</div>
+		</x-slot>
+		<x-slot name="footer">
+		<x-jet-secondary-button wire:click="$toggle('modalOptions')">{{ __('Cancel') }}</x-jet-secondary-button>
+		<x-jet-button type="button" wire:click="printing">{{ __('Download') }}</x-jet-button>
+		</x-slot>
+	</x-jet-dialog-modal>
+	@endif
 </div>
