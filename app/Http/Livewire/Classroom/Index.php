@@ -12,7 +12,7 @@ class Index extends Component
 
 	public function mount($id){
 		$this->classroom = Classroom::find($id);
-		$this->students = Student::where('classroom_id', $id)->with('dormroom')->orderBy('name')->get();
+		$this->students = Student::where('classroom_id', $id)->where('status', 1)->with('dormroom')->orderBy('name')->get();
 	}
     public function render()
     {
