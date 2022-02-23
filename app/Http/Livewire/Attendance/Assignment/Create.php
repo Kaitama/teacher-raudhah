@@ -33,9 +33,9 @@ class Create extends Component
 	];
 	
 	public function setTeachers($teachers){
-		if(!empty($this->teachers)) {
-			$this->remove(array_key_first($this->teachers));
-		}
+		// if(!empty($this->teachers)) {
+		// 	$this->remove(array_key_first($this->teachers));
+		// }
 		$this->teachers[] = $teachers;
 	}
 	
