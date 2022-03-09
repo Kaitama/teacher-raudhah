@@ -6,23 +6,24 @@ use Livewire\Component;
 use App\Models\Userteaching;
 use App\Models\User;
 use Carbon\Carbon;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 class Edit extends Component
 {
 	public $teaching, $categories, $signed_at, $category = 1, $description;
 	public $teacher, $ids = [];
-	
+
 	protected $rules = [
 		'signed_at'	=> 'required|date_format:d/m/Y',
 	];
-	
+
 	protected $messages = [
 		'signed_at.required'	=> 'Tanggal perizinan tidak boleh kosong.',
 		'signed_at.date_format'	=> 'Format penulisan tanggal salah.',
 	];
-	
-	public function mount($id){
+
+	public function mount($id)
+	{
 		$teaching = Userteaching::find($id);
 		if (Auth::id() != $teaching->checker->id) {
 			if (!Auth::user()->hasAnyRole(['developer', 'administrator', 'admin akademik'])) {
@@ -34,11 +35,12 @@ class Edit extends Component
 		$this->signed_at = $teaching->signed_at->format('d/m/Y');
 		$this->category = $teaching->category;
 		$this->description = $teaching->description;
-		
+
 		$this->teacher = $teaching->user;
 	}
-	
-	public function update(){
+
+	public function update()
+	{
 		$this->validate();
 		$this->teaching->update([
 			'category'	=> $this->category,
@@ -52,7 +54,7 @@ class Edit extends Component
 		}
 		$this->emit('saved');
 	}
-	
+
 	public function render()
 	{
 		return view('livewire.attendance.teaching.edit');

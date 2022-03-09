@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Exports;
+
 use App\Exports\GatheringExport;
 use App\Exports\PermitExport;
 use App\Exports\AssignmentExport;
@@ -14,11 +15,12 @@ use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 class AbsensiExport implements WithMultipleSheets
 {
 	use Exportable;
-	
+
 	protected $options, $s_date, $e_date;
 	protected $data_sheets;
-	
-	public function __construct(array $options, $s, $e){
+
+	public function __construct(array $options, $s, $e)
+	{
 		$opt = $options;
 		sort($opt);
 		$this->options = $opt;
@@ -30,26 +32,29 @@ class AbsensiExport implements WithMultipleSheets
 			3 => new AssignmentExport($this->s_date, $this->e_date),
 			4 => new TeachingExport($this->s_date, $this->e_date),
 			5 => new EvaluationExport($this->s_date, $this->e_date),
+			6	=> new TicketExport($this->s_date, $this->e_date),
+			7 => new RecapExport($this->s_date, $this->e_date),
 		);
 	}
-	
+
 	public function array(): array
 	{
 		return $this->options;
 	}
-	
+
 	public function sheets(): array
 	{
 		$sheets = [];
-		
+
 		foreach ($this->options as $key => $val) {
 			$sheets[] = $this->data_sheets[$val];
 		}
-		
+
 		return $sheets;
 	}
-	
-	protected function convertDate($d) {
+
+	protected function convertDate($d)
+	{
 		return Carbon::createFromFormat('d/m/Y', $d)->format('Y-m-d');
 	}
 }

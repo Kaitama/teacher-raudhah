@@ -2,52 +2,57 @@
 
 namespace App\Http\Livewire\Attendance\Teaching;
 
+use Carbon\Carbon;
 use Livewire\Component;
 use App\Models\Userteaching;
-use Carbon\Carbon;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 class Create extends Component
 {
 	public $categories, $signed_at, $category = 1, $description;
 	public $teachers;
-	
+
 	protected $listeners = ['sendTeacher' => 'setTeachers'];
-	
+
 	protected $rules = [
 		'signed_at'	=> 'required|date_format:d/m/Y',
 		'teachers'	=> 'required',
 	];
-	
+
 	protected $messages = [
 		'signed_at.required'	=> 'Tanggal perizinan tidak boleh kosong.',
 		'signed_at.date_format'	=> 'Format penulisan tanggal salah.',
 		'teachers.required'	=> 'Guru yang izin tidak boleh kosong.',
 	];
-	
-	public function setTeachers($teachers){
-		if(!empty($this->teachers)) {
+
+	public function setTeachers($teachers)
+	{
+		if (!empty($this->teachers)) {
 			$this->remove(array_key_first($this->teachers));
 		}
 		$this->teachers[] = $teachers;
 	}
-	
-	public function mount(){
+
+	public function mount()
+	{
 		$this->categories = Userteaching::categoryOptions();
+
 		$this->prepareDates();
 	}
-	
+
 	private function prepareDates()
 	{
 		$this->signed_at = Carbon::today()->format('d/m/Y');
 	}
-	
-	public function remove($i){
+
+	public function remove($i)
+	{
 		unset($this->teachers[$i]);
 		$this->emit('removeTeacher', $i);
 	}
 
-	public function save(){
+	public function save()
+	{
 		$this->validate();
 
 		foreach ($this->teachers as $teacher) {
@@ -64,7 +69,7 @@ class Create extends Component
 		$this->emit('resetTeachers');
 		$this->emit('saved');
 	}
-	
+
 	public function render()
 	{
 		return view('livewire.attendance.teaching.create');

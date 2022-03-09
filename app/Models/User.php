@@ -19,15 +19,15 @@ class User extends Authenticatable
 	use Notifiable;
 	use TwoFactorAuthenticatable;
 	use HasRoles;
-	
-	
+
+
 	protected $dates = ['deleted_at'];
-	
+
 	/**
-	* The attributes that are mass assignable.
-	*
-	* @var array
-	*/
+	 * The attributes that are mass assignable.
+	 *
+	 * @var array
+	 */
 	protected $fillable = [
 		'level',
 		'name',
@@ -36,95 +36,114 @@ class User extends Authenticatable
 		'password',
 		'deleted_at',
 	];
-	
+
 	/**
-	* The attributes that should be hidden for arrays.
-	*
-	* @var array
-	*/
+	 * The attributes that should be hidden for arrays.
+	 *
+	 * @var array
+	 */
 	protected $hidden = [
 		'password',
 		'remember_token',
 		'two_factor_recovery_codes',
 		'two_factor_secret',
 	];
-	
+
 	/**
-	* The attributes that should be cast to native types.
-	*
-	* @var array
-	*/
+	 * The attributes that should be cast to native types.
+	 *
+	 * @var array
+	 */
 	protected $casts = [
 		'email_verified_at' => 'datetime',
 	];
-	
+
 	/**
-	* The accessors to append to the model's array form.
-	*
-	* @var array
-	*/
+	 * The accessors to append to the model's array form.
+	 *
+	 * @var array
+	 */
 	protected $appends = [
 		'profile_photo_url',
 	];
 
-	public function nig(){
+	public function nig()
+	{
 		return $this->hasOne(TeacherNig::class);
 	}
-	
-	public function profile(){
+
+	public function profile()
+	{
 		return $this->hasOne(Profile::class);
 	}
 
-	public function partner(){
+	public function partner()
+	{
 		return $this->hasOne(Userpartner::class);
 	}
 
-	public function childrens(){
+	public function childrens()
+	{
 		return $this->hasMany(Userchildren::class);
 	}
 
-	public function educations(){
+	public function educations()
+	{
 		return $this->hasMany(Usereducation::class);
 	}
 
-	public function works(){
+	public function works()
+	{
 		return $this->hasMany(Userwork::class);
 	}
 
-	public function gatherings(){
+	public function gatherings()
+	{
 		return $this->belongsToMany(Gathering::class);
 	}
 
-	public function permits(){
+	public function permits()
+	{
 		return $this->hasMany(Userpermit::class);
 	}
 
-	public function assignments(){
+	public function assignments()
+	{
 		return $this->hasMany(Userassignment::class);
 	}
 
-	public function teachings(){
+	public function teachings()
+	{
 		return $this->hasMany(Userteaching::class);
 	}
 
-	public function evaluations(){
+	public function evaluations()
+	{
 		return $this->hasMany(Userevaluation::class);
 	}
 
-	public function teachingScores(){
+	public function teachingScores()
+	{
 		return $this->hasMany(Teachingscore::class);
 	}
 
-	public function checkers(){
+	public function checkers()
+	{
 		return $this->hasMany(Userteaching::class, 'id', 'checked_by');
 	}
 
-	public function managementScores(){
+	public function managementScores()
+	{
 		return $this->hasMany(Managementscore::class);
 	}
-	
-	public function classroom(){
+
+	public function classroom()
+	{
 		return $this->hasOne(Classroom::class);
 	}
 
+	public function tickets()
+	{
+		return $this->hasMany(Userticket::class);
+	}
 }

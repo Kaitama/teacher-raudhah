@@ -21,5 +21,9 @@
 	@can('r a evaluasi')
 	<x-nav-link-settings href="{{ route('evaluation.index') }}" :active="request()->routeIs('evaluation.*')">{{ __('Evaluasi') }}</x-nav-link-settings>
 	@endcan
+
+	@can('r a tiket')
+	<x-nav-link-settings href="{{ route('ticket.index') }}" :active="request()->routeIs('ticket.*')">{{ __('Tiket') }}</x-nav-link-settings>
+	@endcan
 	
 </div>

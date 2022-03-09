@@ -15,7 +15,8 @@ class AbsensiImport implements WithMultipleSheets
 			0 => new PermitImport(),
 			1 => new TeachingImport(),
 			2 => new EvaluationImport(),
+			3 => new AssignmentImport(),
+			4 => new TicketImport(),
 		];
 	}
-	
 }

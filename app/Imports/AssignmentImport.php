@@ -4,29 +4,36 @@ namespace App\Imports;
 
 use Carbon\Carbon;
 use App\Models\TeacherNig;
-use App\Models\Userteaching;
-use Illuminate\Support\Facades\Auth;
+use App\Models\Userassignment;
+use App\Models\Userevaluation;
+use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithStartRow;
 
-class TeachingImport implements ToModel, WithStartRow
+class AssignmentImport implements ToModel, WithStartRow
 {
 	public function startRow(): int
 	{
 		return 2;
 	}
 
+	/**
+	 * @param Collection $collection
+	 */
 	public function model(array $row)
 	{
+		//
 		$teacher = TeacherNig::where('number', $row[1])->first();
-		$options = Userteaching::categoryOptions();
+		$options = Userassignment::assignmentOptions();
 
-		return new Userteaching([
+		return new Userassignment([
 			'signed_at'	=> $this->convertDate($row[0]),
-			'checked_by'	=> Auth::id(),
 			'user_id'	=> $teacher->user_id,
-			'category' => array_search($row[2], $options),
-			'description'	=> $row[3] ?? null,
+			'decree'	=> $row[2] ?? null,
+			'category' => array_search($row[3], $options),
+			'started_at'	=> $this->convertDate($row[4]),
+			'ended_at'	=> $this->convertDate($row[5]),
+			'description'	=> $row[6] ?? null,
 		]);
 	}
 

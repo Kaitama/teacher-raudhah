@@ -4,28 +4,31 @@ namespace App\Imports;
 
 use Carbon\Carbon;
 use App\Models\TeacherNig;
-use App\Models\Userteaching;
-use Illuminate\Support\Facades\Auth;
+use App\Models\Userticket;
+use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToModel;
+use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithStartRow;
 
-class TeachingImport implements ToModel, WithStartRow
+class TicketImport implements ToModel, WithStartRow
 {
+
 	public function startRow(): int
 	{
 		return 2;
 	}
 
+	/**
+	 * @param Collection $collection
+	 */
 	public function model(array $row)
 	{
 		$teacher = TeacherNig::where('number', $row[1])->first();
-		$options = Userteaching::categoryOptions();
 
-		return new Userteaching([
-			'signed_at'	=> $this->convertDate($row[0]),
-			'checked_by'	=> Auth::id(),
+		return new Userticket([
+			'saved_at'	=> $this->convertDate($row[0]),
 			'user_id'	=> $teacher->user_id,
-			'category' => array_search($row[2], $options),
+			'session'	=> $row[2],
 			'description'	=> $row[3] ?? null,
 		]);
 	}

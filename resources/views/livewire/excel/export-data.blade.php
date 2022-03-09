@@ -20,11 +20,12 @@
 		<!-- Data to Download -->
 		<div class="col-span-6">
 			<div class="flex items-center justify-between">
-				<x-jet-label>{{ __('Data Absensi') }}<x-required /></x-jet-label>
-				<label for="all_data" class="flex items-center mt-2" wire:click="toggleOptions">
+				
+				<label for="all_data" class="flex items-center mt-2 mb-2" wire:click="toggleOptions">
 					<x-jet-checkbox id="all_data" wire:model="all_options" />
-					<span class="ml-2 text-sm text-gray-600">{{ __('Semua Data') }}</span>
+					<span class="ml-2 font-semibold text-indigo-700">{{ __('Semua Data Absensi') }}</span>
 				</label>
+				
 			</div>
 			<x-jet-input-error for="data_options" class="mt-2" />
 			<div wire:click="checkOptions">
@@ -47,6 +48,14 @@
 				<label for="evaluation" class="flex items-center mt-2">
 					<x-jet-checkbox id="evaluation" value="5" wire:model="data_options" />
 					<span class="ml-2 text-sm text-gray-600">{{ __('Evaluasi') }}</span>
+				</label>
+				<label for="ticket" class="flex items-center mt-2">
+					<x-jet-checkbox id="ticket" value="6" wire:model="data_options" />
+					<span class="ml-2 text-sm text-gray-600">{{ __('Tiket') }}</span>
+				</label>
+				<label for="recaps" class="flex items-center mt-2">
+					<x-jet-checkbox id="recaps" value="7" wire:model="data_options" />
+					<span class="ml-2 text-sm text-gray-600">{{ __('Rekapitulasi Absensi') }}</span>
 				</label>
 			</div>
 		</div>

@@ -22,7 +22,9 @@
 				<x-jet-label for="category">{{ __('Absen Karena') }}<x-required /></x-jet-label>
 				<x-select id="category" wire:model.defer="category" class="mt-1 block w-full">
 					@foreach ($categories as $key => $category)
-							<option value="{{ $key }}">{{ $category }}</option>
+					@if($key >= 4)
+					<option value="{{ $key }}">{{ $category }}</option>
+					@endif
 					@endforeach
 				</x-select>
 				<x-jet-input-error for="category" class="mt-2" />
