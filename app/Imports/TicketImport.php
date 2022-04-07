@@ -25,12 +25,14 @@ class TicketImport implements ToModel, WithStartRow
 	{
 		$teacher = TeacherNig::where('number', $row[1])->first();
 
-		return new Userticket([
-			'saved_at'	=> $this->convertDate($row[0]),
-			'user_id'	=> $teacher->user_id,
-			'session'	=> $row[2],
-			'description'	=> $row[3] ?? null,
-		]);
+		if ($teacher) {
+			return new Userticket([
+				'saved_at'	=> $this->convertDate($row[0]),
+				'user_id'	=> $teacher->user_id,
+				'session'	=> $row[2],
+				'description'	=> $row[3] ?? null,
+			]);
+		}
 	}
 
 	private function convertDate($date)

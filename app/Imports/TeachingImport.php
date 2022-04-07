@@ -21,13 +21,15 @@ class TeachingImport implements ToModel, WithStartRow
 		$teacher = TeacherNig::where('number', $row[1])->first();
 		$options = Userteaching::categoryOptions();
 
-		return new Userteaching([
-			'signed_at'	=> $this->convertDate($row[0]),
-			'checked_by'	=> Auth::id(),
-			'user_id'	=> $teacher->user_id,
-			'category' => array_search($row[2], $options),
-			'description'	=> $row[3] ?? null,
-		]);
+		if ($teacher) {
+			return new Userteaching([
+				'signed_at'	=> $this->convertDate($row[0]),
+				'checked_by'	=> Auth::id(),
+				'user_id'	=> $teacher->user_id,
+				'category' => array_search($row[2], $options),
+				'description'	=> $row[3] ?? null,
+			]);
+		}
 	}
 
 	private function convertDate($date)
