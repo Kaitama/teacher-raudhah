@@ -32,7 +32,7 @@
 							<x-link href="{{ route('teacher.show', $teacher->id) }}" class="text-gray-900 font-semibold text-sm">
 								{{ $teacher['name'] }}
 							</x-link>
-							<div class="text-gray-600 text-sm">{{ $teacher->nig['number'] }}</div>
+							<div class="text-gray-600 text-sm">{{ $teacher->nig ? $teacher->nig['number'] : '' }}</div>
 						</div>
 					</li>
 					
