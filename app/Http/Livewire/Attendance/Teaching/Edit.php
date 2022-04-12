@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 
 class Edit extends Component
 {
-	public $teaching, $categories, $signed_at, $category = 1, $description;
+	public $teaching, $categories, $signed_at, $category, $description;
 	public $teacher, $ids = [];
 
 	protected $rules = [

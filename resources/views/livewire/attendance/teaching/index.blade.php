@@ -9,6 +9,14 @@
 				<option value="100">100</option>
 			</x-select>
 			<x-jet-input type="text" class="block w-full md:w-72" placeholder="Cari disini.." wire:model="search" />
+			<x-select wire:model="order_by" class="w-1/8">
+				<option value="created_at">Tanggal Dibuat</option>
+				<option value="signed_at">Tanggal Absensi</option>
+			</x-select>
+			<x-select wire:model="sort" class="">
+				<option value="desc">Z - A</option>
+				<option value="asc">A - Z</option>
+			</x-select>
 		</div>
 		@can('c a absensi')
 		<x-button-link class="mt-4 md:mt-0" href="{{ route('teaching.create') }}">{{ __('Tambah Absensi') }}</x-button-link>

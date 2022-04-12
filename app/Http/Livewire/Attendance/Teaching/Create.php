@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 class Create extends Component
 {
-	public $categories, $signed_at, $category = 1, $description;
+	public $categories, $signed_at, $category = 4, $description;
 	public $teachers;
 
 	protected $listeners = ['sendTeacher' => 'setTeachers'];
@@ -53,6 +53,7 @@ class Create extends Component
 
 	public function save()
 	{
+		dd(Carbon::createFromFormat('d/m/Y', $this->signed_at)->format('Y-m-d'));
 		$this->validate();
 
 		foreach ($this->teachers as $teacher) {
