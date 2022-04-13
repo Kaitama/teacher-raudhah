@@ -15,8 +15,9 @@ class GatheringImport implements ToModel, WithStartRow
 	{
 		return 2;
 	}
-	
-	public function __construct($gathering){
+
+	public function __construct($gathering)
+	{
 		$this->gath = $gathering;
 	}
 
@@ -24,13 +25,11 @@ class GatheringImport implements ToModel, WithStartRow
 	{
 		$teacher = TeacherNig::where('number', $row[1])->first();
 
-		if($teacher) 
-		// $this->gath->users()->attach($teacher->user_id);
-		$this->ids[] = $teacher->user_id;
-		
+		if ($teacher && $teacher->user_id) $this->ids[] = $teacher->user_id;
 	}
 
-	public function getIds(): array{
+	public function getIds(): array
+	{
 		return $this->ids;
 	}
 }

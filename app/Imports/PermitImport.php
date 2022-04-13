@@ -20,7 +20,7 @@ class PermitImport implements ToModel, WithStartRow
 		$teacher = TeacherNig::where('number', $row[1])->first();
 		$options = Userpermit::permitOptions();
 		// dd($teacher->user_id);
-		if ($teacher) {
+		if ($teacher && $teacher->user_id) {
 			return new Userpermit([
 				'signed_at'	=> $this->convertDate($row[0]),
 				'user_id'	=> $teacher->user_id,

@@ -21,7 +21,7 @@ class TeachingImport implements ToModel, WithStartRow
 		$teacher = TeacherNig::where('number', $row[1])->first();
 		$options = Userteaching::categoryOptions();
 
-		if ($teacher) {
+		if ($teacher && $teacher->user_id) {
 			return new Userteaching([
 				'signed_at'	=> $this->convertDate($row[0]),
 				'checked_by'	=> Auth::id(),

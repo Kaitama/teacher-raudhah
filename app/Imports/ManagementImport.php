@@ -19,18 +19,20 @@ class ManagementImport implements ToModel, WithStartRow
 	{
 		$teacher = TeacherNig::where('number', $row[2])->first();
 		$options = Managementscore::categoryOptions();
-		
-		return new Managementscore([
-			'scored_at'	=> $this->convertDate($row[1]),
-			'user_id'	=> $teacher->user_id,
-			'c1'	=> $row[3] ?? 0,
-			'c2'	=> $row[4] ?? 0,
-			'c3'	=> $row[5] ?? 0,
-			'c4'	=> $row[6] ?? 0,
-			'c5'	=> $row[7] ?? 0,
-			'c6'	=> $row[8] ?? 0,
-			'description'	=> $row[9] ?? null,
-		]);  
+
+		if ($teacher && $teacher->user_id) {
+			return new Managementscore([
+				'scored_at'	=> $this->convertDate($row[1]),
+				'user_id'	=> $teacher->user_id,
+				'c1'	=> $row[3] ?? 0,
+				'c2'	=> $row[4] ?? 0,
+				'c3'	=> $row[5] ?? 0,
+				'c4'	=> $row[6] ?? 0,
+				'c5'	=> $row[7] ?? 0,
+				'c6'	=> $row[8] ?? 0,
+				'description'	=> $row[9] ?? null,
+			]);
+		}
 	}
 
 	private function convertDate($date)

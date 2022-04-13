@@ -26,7 +26,7 @@ class AssignmentImport implements ToModel, WithStartRow
 		$teacher = TeacherNig::where('number', $row[1])->first();
 		$options = Userassignment::assignmentOptions();
 
-		if ($teacher) {
+		if ($teacher && $teacher->user_id) {
 			return new Userassignment([
 				'signed_at'	=> $this->convertDate($row[0]),
 				'user_id'	=> $teacher->user_id,

@@ -20,7 +20,7 @@ class EvaluationImport implements ToModel, WithStartRow
 		$teacher = TeacherNig::where('number', $row[1])->first();
 		$options = Userevaluation::categoryOptions();
 
-		if ($teacher) {
+		if ($teacher && $teacher->user_id) {
 			return new Userevaluation([
 				'signed_at'	=> $this->convertDate($row[0]),
 				'user_id'	=> $teacher->user_id,
