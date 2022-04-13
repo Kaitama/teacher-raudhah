@@ -53,7 +53,7 @@ class Create extends Component
 
 	public function save()
 	{
-		dd(Carbon::createFromFormat('d/m/Y', $this->signed_at)->format('Y-m-d'));
+
 		$this->validate();
 
 		foreach ($this->teachers as $teacher) {
