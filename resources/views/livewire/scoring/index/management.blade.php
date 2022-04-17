@@ -49,7 +49,7 @@
 				</x-td>
 				<x-td>
 					@php
-					if($rt >= 91) $hrf = 'A'; elseif($rt >= 81) $hrf = 'B'; elseif($rt >= 71) $hrf = 'C'; elseif($rt >= 61) $hrf = 'D'; else $hrf = 'E';
+					if($rt >= 81) $hrf = 'A'; elseif($rt >= 71) $hrf = 'B'; elseif($rt >= 61) $hrf = 'C'; elseif($rt >= 51) $hrf = 'D'; else $hrf = 'E';
 					@endphp
 					<div class="text-gray-900 font-semibold text-center">
 						{{ $hrf }}
@@ -84,12 +84,9 @@
 			<div class="w-1/2">
 				<div class="text-gray-900 font-semibold mb-1">{{ __('Rentang Nilai') }}</div>
 				<ul class="text-gray-600 text-sm">
-					<li>91 - 100 = Memuaskan</li>
-					<li>81 - 90 = Sangat baik</li>
-					<li>71 - 80 = Baik</li>
-					<li>61 - 70 = Cukup</li>
-					<li>51 - 60 = Kurang</li>
-					<li>0 - 50 = Sangat kurang</li>
+					@foreach ($score_ranges as $key => $scr)
+					<li>{{ $key }} = {{ $scr }}</li>
+					@endforeach
 				</ul>
 			</div>
 			<div class="w-1/2">

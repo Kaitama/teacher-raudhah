@@ -9,20 +9,23 @@ use App\Models\Teachingscore;
 class Teachery extends Component
 {
 	use WithPagination;
-	
+
 	public $perpage = 10, $teacher, $categories, $item, $confirmation_modal = false;
-	
-	public function mount($teacher){
+
+	public function mount($teacher)
+	{
 		$this->teacher = $teacher;
 		$this->categories = Teachingscore::categoryOptions();
 	}
 
-	public function confirmDelete($id){
+	public function confirmDelete($id)
+	{
 		$this->item = Teachingscore::find($id);
 		$this->confirmation_modal = true;
 	}
 
-	public function destroy(){
+	public function destroy()
+	{
 		$this->item->delete();
 		$this->confirmation_modal = false;
 	}
@@ -30,9 +33,12 @@ class Teachery extends Component
 	public function render()
 	{
 		$teacher_scores = Teachingscore::where('user_id', $this->teacher->id)
-		->orderByDesc('scored_at')
-		->orderByDesc('created_at')
-		->paginate($this->perpage);
-		return view('livewire.scoring.index.teachery', ['teacher_scores' => $teacher_scores]);
+			->orderByDesc('scored_at')
+			->orderByDesc('created_at')
+			->paginate($this->perpage);
+		return view('livewire.scoring.index.teachery', [
+			'teacher_scores' => $teacher_scores,
+			'score_ranges'	=> Teachingscore::scoreRange(),
+		]);
 	}
 }

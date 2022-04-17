@@ -13,15 +13,27 @@ class Teachingscore extends Model
 
 	protected $dates = ['scored_at'];
 
+	static function scoreRange()
+	{
+		return [
+			'81 - 90' => 'Sangat Baik',
+			'71 - 80'	=> 'Baik',
+			'61 - 70' => 'Cukup',
+			'51 - 60' => 'Kurang',
+			'0 - 50' => 'Sangat Kurang',
+		];
+	}
+
 	static function categoryOptions()
 	{
 		return [
 			'c1'	=> 'Penyampaian Materi',
 			'c2'	=> 'Penguasaan Materi dan Kelas',
-			'c3'	=> 'Persiapan Mengajar',
-			'c4'	=> 'Keteladanan Berpakaian / Ibadah',
+			'c3'	=> 'Kehadiran Mengajar',
+			'c4'	=> 'Absensi Mengajar',
 		];
 	}
+
 
 	public function user()
 	{

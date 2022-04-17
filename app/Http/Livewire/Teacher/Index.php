@@ -50,6 +50,7 @@ class Index extends Component
 		$name = strtoupper($this->guru->name);
 		$starting = $this->convertDate($this->started);
 		$ending = $this->convertDate($this->ended);
+
 		$mscores = Managementscore::where('user_id', $this->guru->id)
 			->whereDate('scored_at', '>=', $starting)
 			->whereDate('scored_at', '<=', $ending)
@@ -94,6 +95,7 @@ class Index extends Component
 
 		$data = [
 			'teacher' => $this->guru,
+			'ranges' => Teachingscore::scoreRange(),
 			'mscores'	=> $mscores,
 			'moptions'	=> Managementscore::categoryOptions(),
 			'tscores' => $tscores,

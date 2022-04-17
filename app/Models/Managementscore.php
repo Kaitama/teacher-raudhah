@@ -7,24 +7,37 @@ use Illuminate\Database\Eloquent\Model;
 
 class Managementscore extends Model
 {
-    use HasFactory;
+	use HasFactory;
 
-		protected $guarded = [];
+	protected $guarded = [];
 
-		protected $dates = ['scored_at'];
+	protected $dates = ['scored_at'];
 
-		static function categoryOptions(){
-			return [
-				'c1'	=> 'Konsistensi Kinerja',
-				'c2'	=> 'Ketaatan Kepada Atasan',
-				'c3'	=> 'Kreativitas / Inovasi',
-				'c4'	=> 'Ketepatan Laporan Kegiatan / Keuangan',
-				'c5'	=> 'Kerja Sama Tim',
-				'c6'	=> 'Ketuntasan Tugas'
-			];
-		}
+	static function scoreRange()
+	{
+		return [
+			'81 - 90' => 'Sangat Baik',
+			'71 - 80'	=> 'Baik',
+			'61 - 70' => 'Cukup',
+			'51 - 60' => 'Kurang',
+			'0 - 50' => 'Sangat Kurang',
+		];
+	}
 
-		public function user(){
-			return $this->belongsTo(User::class);
-		}
+	static function categoryOptions()
+	{
+		return [
+			'c1'	=> 'Konsistensi Kinerja',
+			'c2'	=> 'Ketaatan Kepada Atasan',
+			'c3'	=> 'Kreativitas / Inovasi',
+			'c4'	=> 'Ketepatan Laporan Kegiatan / Keuangan',
+			'c5'	=> 'Kerja Sama Tim',
+			'c6'	=> 'Ketuntasan Tugas'
+		];
+	}
+
+	public function user()
+	{
+		return $this->belongsTo(User::class);
+	}
 }

@@ -35,6 +35,9 @@ class Assignment extends Component
 			->orderByDesc('created_at')
 			->paginate($this->perpage);
 
-		return view('livewire.scoring.index.assignment', ['assignment_scores' => $assignment_scores]);
+		return view('livewire.scoring.index.assignment', [
+			'assignment_scores' => $assignment_scores,
+			'score_ranges' => Assignmentscore::scoreRange(),
+		]);
 	}
 }

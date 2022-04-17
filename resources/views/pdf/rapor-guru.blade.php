@@ -124,12 +124,9 @@
 				<td style="width: 50%; vertical-align:text-top">
 					<p>
 						<b>Rentang Nilai</b><br>
-						91 - 100 = Memuaskan<br>
-						81 - 90 = Sangat baik<br>
-						71 - 80 = Baik<br>
-						61 - 70 = Cukup<br>
-						51 - 60 = Kurang<br>
-						0 - 50 = Sangat kurang<br>
+						@foreach ($ranges as $k => $range)
+						{{ $k }} = {{ $range }} <br>
+						@endforeach
 					</p>
 				</td>
 				<td style="width: 50%; vertical-align:text-top">
@@ -179,12 +176,9 @@
 				<td style="width: 50%; vertical-align:text-top">
 					<p>
 						<b>Rentang Nilai</b><br>
-						91 - 100 = Memuaskan<br>
-						81 - 90 = Sangat baik<br>
-						71 - 80 = Baik<br>
-						61 - 70 = Cukup<br>
-						51 - 60 = Kurang<br>
-						0 - 50 = Sangat kurang<br>
+						@foreach ($ranges as $k => $range)
+						{{ $k }} = {{ $range }} <br>
+						@endforeach
 					</p>
 				</td>
 				<td style="width: 50%; vertical-align:text-top">
@@ -226,12 +220,9 @@
 				<td style="width: 40%; vertical-align:text-top">
 					<p>
 						<b>Rentang Nilai</b><br>
-						91 - 100 = Memuaskan<br>
-						81 - 90 = Sangat baik<br>
-						71 - 80 = Baik<br>
-						61 - 70 = Cukup<br>
-						51 - 60 = Kurang<br>
-						0 - 50 = Sangat kurang<br>
+						@foreach ($ranges as $k => $range)
+						{{ $k }} = {{ $range }}<br>
+						@endforeach
 					</p>
 				</td>
 				<td style="width: 60%; vertical-align:text-top">

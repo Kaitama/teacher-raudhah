@@ -36,6 +36,9 @@ class Management extends Component
 			->orderByDesc('scored_at')
 			->orderByDesc('created_at')
 			->paginate($this->perpage);
-		return view('livewire.scoring.index.management', ['teacher_scores' => $teacher_scores]);
+		return view('livewire.scoring.index.management', [
+			'teacher_scores' => $teacher_scores,
+			'score_ranges'	=> Managementscore::scoreRange(),
+		]);
 	}
 }
