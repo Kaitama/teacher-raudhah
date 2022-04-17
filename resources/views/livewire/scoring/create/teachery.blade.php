@@ -1,11 +1,11 @@
 <div>
 	<x-jet-form-section submit="save">
 		<x-slot name="title">
-			{{ __('Keguruan') }}
+			{{ __('Fungsional') }}
 		</x-slot>
 		
 		<x-slot name="description">
-			{{ __('Penilaian keguruan') }} {{ $teacher->name }}.
+			{{ __('Penilaian fungsional') }} {{ $teacher->name }}.
 		</x-slot>
 		
 		<x-slot name="form">

@@ -1,7 +1,7 @@
 <x-jet-form-section submit="importScoring" x-data="{excelName: null, excelPreview: null}">
 	<x-slot name="title">{{ __('Import Excel Penilaian Guru') }}</x-slot>
 	<x-slot name="description">
-		{{ __('Upload data penilaian Keguruan dan Kepengurusan dari file Excel.') }}
+		{{ __('Upload data penilaian Fungsional dan Struktural dari file Excel.') }}
 		<div class="mt-2">
 			<x-jet-secondary-button wire:click.prevent="downloadTemplate">{{ __('Download Template Penilaian') }}</x-jet-secondary-button>
 		</div>

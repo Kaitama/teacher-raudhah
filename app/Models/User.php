@@ -146,4 +146,9 @@ class User extends Authenticatable
 	{
 		return $this->hasMany(Userticket::class);
 	}
+
+	public function assignmentScores()
+	{
+		return $this->hasMany(Assignmentscore::class);
+	}
 }

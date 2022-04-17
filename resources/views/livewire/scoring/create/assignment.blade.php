@@ -1,34 +1,32 @@
 <div>
-	<x-jet-form-section submit="update">
+	<x-jet-form-section submit="save">
 		<x-slot name="title">
-			@if ($page == 1)
-			{{ __('Fungsional') }}
-			@else
-			{{ __('Struktural') }}
-			@endif
+			{{ __('Penugasan') }}
 		</x-slot>
 		
 		<x-slot name="description">
-			{{ __('Ubah penilaian') }} {{ $page == 1 ? 'fungsional' : 'struktural' }} {{ $teacher->name }}.
+			{{ __('Penilaian penugasan') }} {{ $teacher->name }}.
 		</x-slot>
 		
 		<x-slot name="form">
 
 			<div class="col-span-4">
-				<x-jet-label for="scored_at">{{ __('Tanggal Penilaian (dd/mm/yyyy)') }} <x-required /> </x-jet-label>
+				<x-jet-label for="scored_at">{{ __('Tanggal Penilaian (dd/mm/yyyy)') }}<x-required /> </x-jet-label>
 				<x-jet-input id="scored_at" type="text" class="mt-1 block w-full" wire:model.defer="scored_at" autocomplete="scored_at" />
 				<x-jet-input-error for="scored_at" class="mt-2" />
 			</div>
 
-			@foreach ($columns as $k => $v)
-			
 			<div class="col-span-4">
-				<x-jet-label for="{{ $k }}" value="{{ $categories[$k] }}" />
-				<x-jet-input id="{{ $k }}" type="text" class="mt-1 block w-full" wire:model.defer="columns.{{ $k }}" autocomplete="{{ $k }}" />
-				<x-jet-input-error for="columns.{{ $k }}" class="mt-2" />
+				<x-jet-label for="activity">{{ __('Nama Kegiatan') }}<x-required /></x-jet-label>
+				<x-jet-input id="activity" type="text" class="mt-1 block w-full" wire:model.defer="activity" />
+				<x-jet-input-error for="activity" class="mt-2" />
 			</div>
-		
-			@endforeach
+
+			<div class="col-span-4">
+				<x-jet-label for="score">{{ __('Nilai') }}<x-required /></x-jet-label>
+				<x-jet-input id="score" type="text" class="mt-1 block w-full" wire:model.defer="score" autocomplete="score" />
+				<x-jet-input-error for="score" class="mt-2" />
+			</div>
 
 			<div class="col-span-4">
 				<x-jet-label for="description" value="{{ __('Keterangan') }}" />
@@ -42,7 +40,7 @@
 			</x-jet-action-message>
 			
 			<x-jet-button wire:loading.attr="disabled">
-				{{ __('Ubah') }}
+				{{ __('Simpan') }}
 			</x-jet-button>
 		</x-slot>
 	</x-jet-form-section>

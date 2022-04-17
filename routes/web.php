@@ -107,6 +107,9 @@ Route::prefix('/dashboard')->middleware(['auth:sanctum', 'verified'])->group(fun
 	Route::get('/scoring/edit/{id}/{score}/{page}', function ($id, $score, $page) {
 		return view('scoring.edit', ['id' => $id, 'score' => $score, 'page' => $page]);
 	})->name('scoring.edit')->middleware(['can:u a penilaian']);
+	Route::get('/scoring/edit-assignment/{id}/{score}', function ($id, $score) {
+		return view('scoring.edit-assignment', ['id' => $id, 'score' => $score]);
+	})->name('scoring.edit.assignment')->middleware(['can:u a penilaian']);
 
 	// ATTENDANCE HISTORY
 	Route::get('/history/index/{id}', function ($id) {

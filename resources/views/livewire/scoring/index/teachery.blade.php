@@ -1,8 +1,8 @@
 <div class="py-4">
 	
 	<div class="px-4">
-		<h1 class="text-xl text-left">{{ __('Keguruan') }}</h1>
-		<div class="text-gray-600">{{ __('Penilaian keguruan') }} {{ $teacher->name }}</div>
+		<h1 class="text-xl text-left">{{ __('Fungsional') }}</h1>
+		<div class="text-gray-600">{{ __('Penilaian fungsional') }} {{ $teacher->name }}</div>
 	</div>
 	
 	
@@ -36,14 +36,14 @@
 				</x-td>
 				@endforeach
 				<x-td>
-					@php $rt  = round(array_sum([$score->c1, $score->c2, $score->c3, $score->c4, $score->c5, $score->c6]) / 6, 0) @endphp
+					@php $rt  = round(array_sum([$score->c1, $score->c2, $score->c3, $score->c4, $score->c5, $score->c6]) / 4, 1) @endphp
 					<div class="text-gray-900 font-semibold text-right">
 						{{ $rt }}
 					</div>
 				</x-td>
 				<x-td>
 					@php
-					if($rt >= 80) $hrf = 'A'; elseif($rt >= 70) $hrf = 'B'; elseif($rt >= 60) $hrf = 'C'; elseif($rt >= 50) $hrf = 'D'; else $hrf = 'E';
+					if($rt >= 91) $hrf = 'A'; elseif($rt >= 81) $hrf = 'B'; elseif($rt >= 71) $hrf = 'C'; elseif($rt >= 61) $hrf = 'D'; else $hrf = 'E';
 					@endphp
 					<div class="text-gray-900 font-semibold text-center">
 						{{ $hrf }}
@@ -74,15 +74,31 @@
 	</div>
 	@endif
 	
-	<div class="mt-4 px-2 md:px-4">
-		<div class="text-gray-900 font-semibold mb-1">Keterangan</div>
-		<ul class="text-gray-600 text-sm">
-			@foreach ($categories as $c => $val)
-			<li>{{ strtoupper($c) }} : {{ $val }}</li>
-			@endforeach
-			<li>{{ __('RT : Rata-rata Nilai') }}</li>
-			<li>{{ __('HRF : Nilai Huruf') }}</li>
-		</ul>
+	<div class="mt-4 px-2 px-4">
+		<div class="flex items-start justify-between">
+			<div class="w-1/2">
+				<div class="text-gray-900 font-semibold mb-1">{{ __('Rentang Nilai') }}</div>
+				<ul class="text-gray-600 text-sm">
+					<li>91 - 100 = Memuaskan</li>
+					<li>81 - 90 = Sangat baik</li>
+					<li>71 - 80 = Baik</li>
+					<li>61 - 70 = Cukup</li>
+					<li>51 - 60 = Kurang</li>
+					<li>0 - 50 = Sangat kurang</li>
+				</ul>
+			</div>
+			<div class="w-1/2">
+				<div class="text-gray-900 font-semibold mb-1">{{ __('Keterangan') }}</div>
+				<ul class="text-gray-600 text-sm">
+					@foreach ($categories as $c => $val)
+					<li>{{ strtoupper($c) }} : {{ $val }}</li>
+					@endforeach
+					<li>{{ __('RT : Rata-rata Nilai') }}</li>
+					<li>{{ __('HRF : Nilai Huruf') }}</li>
+				</ul>
+			</div>
+			
+		</div>
 	</div>
 	
 	@can('d a penilaian')

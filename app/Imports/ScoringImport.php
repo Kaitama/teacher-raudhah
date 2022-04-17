@@ -13,6 +13,7 @@ class ScoringImport implements WithMultipleSheets
 		return [
 			0 => new TeacheryImport(),
 			1 => new ManagementImport(),
+			2 => new AssignmentscoreImport(),
 		];
 	}
 }

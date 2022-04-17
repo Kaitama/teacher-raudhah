@@ -11,18 +11,20 @@ class ScoringExport implements WithMultipleSheets
 {
 	use Exportable;
 	public $user;
-	
-	public function __construct($id){
+
+	public function __construct($id)
+	{
 		$this->user = $id;
 	}
-	
+
 	public function sheets(): array
 	{
 		$sheets = [
 			new TeachingExport($this->user),
 			new ManagementExport($this->user),
+			new AssignmentscoreExport($this->user),
 		];
-		
+
 		return $sheets;
 	}
 }

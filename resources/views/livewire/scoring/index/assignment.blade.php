@@ -1,8 +1,8 @@
 <div class="py-4">
 	
 	<div class="px-4">
-		<h1 class="text-xl text-left">{{ __('Struktural') }}</h1>
-		<div class="text-gray-600">{{ __('Penilaian struktural') }} {{ $teacher->name }}</div>
+		<h1 class="text-xl text-left">{{ __('Penugasan') }}</h1>
+		<div class="text-gray-600">{{ __('Penilaian penugasan') }} {{ $teacher->name }}</div>
 	</div>
 	
 	
@@ -11,54 +11,55 @@
 		<x-slot name="th">
 			<x-th>{{ __('#') }}</x-th>
 			<x-th>{{ __('Tanggal') }}</x-th>
-			@foreach ($categories as $k => $category)
-			<x-th class="text-right">
-				{{ $k }}
-			</x-th>
-			@endforeach
-			<x-th class="text-right">
-				{{ __('RT') }}
-			</x-th>
+			
+			<x-th class="text-right">{{ __('Nama Kegiatan') }}</x-th>
+			<x-th class="text-right">{{ __('Nilai') }}</x-th>
+			
 			<x-th class="text-center">
 				{{ __('HRF') }}
 			</x-th>
+			<x-th>{{ __('Keterangan') }}</x-th>
 			<x-th></x-th>
 		</x-slot>
 		<x-slot name="td">
 			
-			@forelse ($teacher_scores as $i => $score)
+			@forelse ($assignment_scores as $i => $score)
 			<tr>
-				<x-td class="text-gray-600">{{ $teacher_scores->firstItem() + $i }}</x-td>
+				<x-td class="text-gray-600">{{ $assignment_scores->firstItem() + $i }}</x-td>
 				<x-td>
 					<div class="text-gray-900 text-sm">
 						{{ $score->scored_at->isoFormat('LL') }}
 					</div>
 				</x-td>
-				@foreach ($categories as $i => $cat)
+			
 				<x-td>
 					<div class="text-gray-900 font-semibold text-right">
-						{{ $score->$i }}
+						{{ $score->activity }}
 					</div>
 				</x-td>
-				@endforeach
 				<x-td>
-					@php $rt  = round(array_sum([$score->c1, $score->c2, $score->c3, $score->c4, $score->c5, $score->c6]) / 6, 0) @endphp
 					<div class="text-gray-900 font-semibold text-right">
-						{{ $rt }}
+						{{ $score->score }}
 					</div>
 				</x-td>
+			
+			
 				<x-td>
 					@php
-					if($rt >= 91) $hrf = 'A'; elseif($rt >= 81) $hrf = 'B'; elseif($rt >= 71) $hrf = 'C'; elseif($rt >= 61) $hrf = 'D'; else $hrf = 'E';
+					if($score->score >= 91) $hrf = 'A'; elseif($score->score >= 81) $hrf = 'B'; elseif($score->score >= 71) $hrf = 'C'; elseif($score->score >= 61) $hrf = 'D'; else $hrf = 'E';
 					@endphp
 					<div class="text-gray-900 font-semibold text-center">
 						{{ $hrf }}
 					</div>
 				</x-td>
+
+				<x-td>
+					{{ $score->description ?? '-' }}
+				</x-td>
 				<x-td class="text-right text-sm font-medium">
 					<div class="flex space-x-4 flex-row justify-end">
 						@can('u a penilaian')
-						<x-buttons.button-edit href="{{ route('scoring.edit', [$teacher->id, $score->id, 2]) }}"></x-buttons.button-edit>
+						<x-buttons.button-edit href="{{ route('scoring.edit.assignment', [$teacher->id, $score->id]) }}"></x-buttons.button-edit>
 						@endcan
 						@can('d a penilaian')
 						<x-buttons.button-delete wire:click="confirmDelete({{$score->id}})"></x-buttons.button-delete>
@@ -67,15 +68,15 @@
 				</x-td>
 			</tr>
 			@empty
-			<x-empty-records colspan="{{ 5 + count($categories) }}" />
+			<x-empty-records colspan="7" />
 			@endforelse
 			
 		</x-slot>
 	</x-table>
 	
-	@if($teacher_scores->hasPages())
+	@if($assignment_scores->hasPages())
 	<div class="mt-4">
-		{{ $teacher_scores->links() }}
+		{{ $assignment_scores->links() }}
 	</div>
 	@endif
 	
@@ -95,10 +96,6 @@
 			<div class="w-1/2">
 				<div class="text-gray-900 font-semibold mb-1">{{ __('Keterangan') }}</div>
 				<ul class="text-gray-600 text-sm">
-					@foreach ($categories as $c => $val)
-					<li>{{ strtoupper($c) }} : {{ $val }}</li>
-					@endforeach
-					<li>{{ __('RT : Rata-rata Nilai') }}</li>
 					<li>{{ __('HRF : Nilai Huruf') }}</li>
 				</ul>
 			</div>
@@ -110,7 +107,7 @@
 	<x-jet-confirmation-modal wire:model="confirmation_modal">
 		<x-slot name="title">{{ __('Konfirmasi Hapus Penilaian') }}</x-slot>
 		<x-slot name="content">
-			<p>{{ __('Anda yakin ingin menghapus data penilaian kepengurusan ') }} <span class="text-red-600 font-medium">{{ $teacher->name ?? '' }}</span> {{ __(' pada tanggal ') }} <span class="text-red-600 font-medium">{{ $item ? $item->scored_at->isoFormat('LL') : '' }}</span>?</p>
+			<p>{{ __('Anda yakin ingin menghapus data penilaian penugasan ') }} <span class="text-red-600 font-medium">{{ $teacher->name ?? '' }}</span> {{ __(' pada tanggal ') }} <span class="text-red-600 font-medium">{{ $item ? $item->scored_at->isoFormat('LL') : '' }}</span>?</p>
 		</x-slot>
 		
 		<x-slot name="footer">

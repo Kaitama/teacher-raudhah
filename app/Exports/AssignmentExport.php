@@ -16,9 +16,10 @@ use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 
 class AssignmentExport implements FromQuery, WithTitle, WithMapping, WithColumnFormatting, ShouldAutoSize, WithHeadings, WithStyles
 {
-	private $cats, $s, $e, $no = 1;  
-	
-	public function __construct($s, $e){
+	private $cats, $s, $e, $no = 1;
+
+	public function __construct($s, $e)
+	{
 		$this->s = $s;
 		$this->e = $e;
 		$this->cats = Userassignment::assignmentOptions();
@@ -26,12 +27,13 @@ class AssignmentExport implements FromQuery, WithTitle, WithMapping, WithColumnF
 	public function query()
 	{
 		return Userassignment::query()
-		->whereDate('signed_at', '>=', $this->s)
-		->whereDate('signed_at', '<=', $this->e)
-		->orderBy('signed_at');
+			->whereDate('signed_at', '>=', $this->s)
+			->whereDate('signed_at', '<=', $this->e)
+			->orderBy('signed_at');
 	}
-	
-	public function map($data): array{
+
+	public function map($data): array
+	{
 		return [
 			$this->no++,
 			Date::dateTimeToExcel($data->signed_at),
@@ -40,11 +42,11 @@ class AssignmentExport implements FromQuery, WithTitle, WithMapping, WithColumnF
 			$data->decree,
 			$this->cats[$data->category],
 			$data->description,
-			Date::dateTimeToExcel($data->started_at),
-			Date::dateTimeToExcel($data->ended_at),
+			$data->started_at ? Date::dateTimeToExcel($data->started_at) : null,
+			$data->ended_at ? Date::dateTimeToExcel($data->ended_at) : null,
 		];
 	}
-	
+
 	public function headings(): array
 	{
 		return [
@@ -68,12 +70,12 @@ class AssignmentExport implements FromQuery, WithTitle, WithMapping, WithColumnF
 			'I' => NumberFormat::FORMAT_DATE_DDMMYYYY,
 		];
 	}
-	
+
 	public function title(): string
 	{
 		return 'PENUGASAN';
 	}
-	
+
 	public function styles(Worksheet $sheet)
 	{
 		return [

@@ -16,20 +16,22 @@ use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 
 class ManagementExport implements FromQuery, WithTitle, WithMapping, WithColumnFormatting, ShouldAutoSize, WithHeadings, WithStyles
 {
-	private $user, $categories, $no = 1;  
-	
-	public function __construct($id){
+	private $user, $categories, $no = 1;
+
+	public function __construct($id)
+	{
 		$this->user = $id;
 		$this->categories = Managementscore::categoryOptions();
 	}
 	public function query()
 	{
 		return Managementscore::query()
-		->where('user_id', $this->user)
-		->orderBy('scored_at');
+			->where('user_id', $this->user)
+			->orderBy('scored_at');
 	}
-	
-	public function map($data): array{
+
+	public function map($data): array
+	{
 		$cats = $this->setCategories($data);
 		$dt = [
 			$this->no++,
@@ -39,7 +41,7 @@ class ManagementExport implements FromQuery, WithTitle, WithMapping, WithColumnF
 		$ar[] = $data->description;
 		return $ar;
 	}
-	
+
 	public function headings(): array
 	{
 		$t1 = ['No.', 'Tanggal'];
@@ -51,19 +53,19 @@ class ManagementExport implements FromQuery, WithTitle, WithMapping, WithColumnF
 		$t[] = 'Keterangan';
 		return $t;
 	}
-	
+
 	public function columnFormats(): array
 	{
 		return [
 			'B' => NumberFormat::FORMAT_DATE_DDMMYYYY,
 		];
 	}
-	
+
 	public function title(): string
 	{
-		return 'KEPENGURUSAN';
+		return 'STRUKTURAL';
 	}
-	
+
 	public function styles(Worksheet $sheet)
 	{
 		// $sheet->getStyle(1)->getAlignment()->setWrapText(true);
@@ -71,7 +73,7 @@ class ManagementExport implements FromQuery, WithTitle, WithMapping, WithColumnF
 			1    => ['font' => ['bold' => true, 'size' => 14]],
 		];
 	}
-	
+
 	private function setCategories($data)
 	{
 		$cs = [];

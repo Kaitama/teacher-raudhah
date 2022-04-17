@@ -25,6 +25,9 @@
 		ol li {
 			margin-top: 20px;
 		}
+		.page-break {
+			page-break-after: always;
+		}
 	</style>
 </head>
 <body>
@@ -38,12 +41,12 @@
 		<tr>
 			<td style="width: 20%">Nama</td>
 			<td style="width: 2%">:</td>
-			<td>{{ $teacher->profile->ftitle ?? '' }} {{ ucwords(strtolower($teacher->name)) }}{{ $teacher->profile->ltitle ? ', '. $teacher->profile->ltitle : '' }}</td>
+			<td>{{ $teacher->profile->ftitle ?? '' }} {{ ucwords(strtolower($teacher->name ?? '')) }}{{ $teacher->profile->ltitle ? ', '. $teacher->profile->ltitle : '' }}</td>
 		</tr>
 		<tr>
 			<td>NIG</td>
 			<td>:</td>
-			<td>{{ $teacher->nig->number }}</td>
+			<td>{{ $teacher->nig ? $teacher->nig->number : '' }}</td>
 		</tr>
 		<tr>
 			<td>HP</td>
@@ -74,10 +77,10 @@
 			</tr>
 			@forelse ($permits as $permit)
 			<tr>
-				<td>{{ $permit->signed_at->format('d/m/Y') }}</td>
+				<td>{{ $permit->signed_at ? $permit->signed_at->format('d/m/Y') : '' }}</td>
 				<td>{{ $permitoptions[$permit->category] }}</td>
-				<td>{{ $permit->started_at->format('d/m/Y') }}</td>
-				<td>{{ $permit->ended_at->format('d/m/Y') }}</td>
+				<td>{{ $permit->started_at ? $permit->started_at->format('d/m/Y') : '' }}</td>
+				<td>{{ $permit->ended_at ? $permit->ended_at->format('d/m/Y') : '' }}</td>
 				<td>{{ $permit->description ?? '-' }}</td>
 			</tr>
 			@empty
@@ -87,6 +90,7 @@
 			@endforelse
 		</table>
 		
+		
 		<li>PENILAINAN STRUKTURAL</li>
 		<table class="content" cellspacing="0">
 			<tr>
@@ -94,6 +98,7 @@
 				@foreach ($moptions as $k => $opt)
 				<th>{{ strtoupper($k) }}</th>
 				@endforeach
+				<th>RT</th>
 				<th style="width: 35%">Keterangan</th>
 			</tr>
 			@forelse ($mscores as $i => $score)
@@ -102,6 +107,10 @@
 				@foreach ($moptions as $k => $opt)
 				<td style="text-align: center">{{ $score->$k }}</td>
 				@endforeach
+				<td style="text-align: center">
+					@php $rts  = round(array_sum([$score->c1, $score->c2, $score->c3, $score->c4, $score->c5, $score->c6]) / count($moptions), 1) @endphp
+					{{ $rts }}
+				</td>
 				<td>{{ $score->description ?? '-' }}</td>
 			</tr>
 			@empty
@@ -110,12 +119,32 @@
 			</tr>
 			@endforelse
 		</table>
-		<p>
-			<b>Catatan:</b> <br>
-			@foreach ($moptions as $k => $opt)
-			{{ strtoupper($k) }} = {{ $opt }}<br>
-			@endforeach
-		</p>
+		<table style="width: 100%;" cellpadding=0 cellspacing=0 border="0">
+			<tr>
+				<td style="width: 50%; vertical-align:text-top">
+					<p>
+						<b>Rentang Nilai</b><br>
+						91 - 100 = Memuaskan<br>
+						81 - 90 = Sangat baik<br>
+						71 - 80 = Baik<br>
+						61 - 70 = Cukup<br>
+						51 - 60 = Kurang<br>
+						0 - 50 = Sangat kurang<br>
+					</p>
+				</td>
+				<td style="width: 50%; vertical-align:text-top">
+					<p>
+						<b>Keterangan:</b> <br>
+						@foreach ($moptions as $k => $opt)
+						{{ strtoupper($k) }} = {{ $opt }}<br>
+						@endforeach
+						RT = Rata-rata Nilai
+					</p>
+				</td>
+				
+			</tr>
+		</table>
+		
 		
 		<li>PENILAINAN FUNGSIONAL</li>
 		<table class="content" cellspacing="0">
@@ -124,6 +153,7 @@
 				@foreach ($toptions as $k => $opt)
 				<th>{{ strtoupper($k) }}</th>
 				@endforeach
+				<th>RT</th>
 				<th style="width: 35%">Keterangan</th>
 			</tr>
 			@forelse ($tscores as $i => $score)
@@ -132,6 +162,10 @@
 				@foreach ($toptions as $k => $opt)
 				<td style="text-align: center">{{ $score->$k }}</td>
 				@endforeach
+				<td style="text-align: center">
+					@php $rtf  = round(array_sum([$score->c1, $score->c2, $score->c3, $score->c4]) / count($toptions), 1) @endphp
+					{{ $rtf }}
+				</td>
 				<td>{{ $score->description ?? '-' }}</td>
 			</tr>
 			@empty
@@ -140,14 +174,74 @@
 			</tr>
 			@endforelse
 		</table>
-		<p>
-			<b>Catatan:</b> <br>
-			@foreach ($toptions as $k => $opt)
-			{{ strtoupper($k) }} = {{ $opt }} <br>
-			@endforeach
-		</p>
+		<table style="width: 100%;" cellpadding=0 cellspacing=0 border="0">
+			<tr>
+				<td style="width: 50%; vertical-align:text-top">
+					<p>
+						<b>Rentang Nilai</b><br>
+						91 - 100 = Memuaskan<br>
+						81 - 90 = Sangat baik<br>
+						71 - 80 = Baik<br>
+						61 - 70 = Cukup<br>
+						51 - 60 = Kurang<br>
+						0 - 50 = Sangat kurang<br>
+					</p>
+				</td>
+				<td style="width: 50%; vertical-align:text-top">
+					<p>
+						<b>Keterangan:</b> <br>
+						@foreach ($toptions as $k => $opt)
+						{{ strtoupper($k) }} = {{ $opt }}<br>
+						@endforeach
+						RT = Rata-rata Nilai
+					</p>
+				</td>
+				
+			</tr>
+		</table>
 		
-		<li>ABSENSI PERKUMPULAN</li>
+		<li>PENILAIAN PENUGASAN</li>
+		<table class="content" cellspacing="0">
+			<tr>
+				<th style="width: 10%">Tanggal</th>
+				<th>Nama Kegiatan</th>
+				<th style="width: 10%">Nilai</th>
+				<th style="width: 35%">Keterangan</th>
+			</tr>
+			@forelse ($ascores as $i => $score)
+			<tr>
+				<td>{{ $score->scored_at->format('d/m/Y') }}</td>
+				<td>{{ $score->activity ?? '' }}</td>
+				<td>{{ $score->score ?? '' }}</td>
+				<td>{{ $score->description ?? '-' }}</td>
+			</tr>
+			@empty
+			<tr>
+				<td colspan="4">Data masih kosong.</td>
+			</tr>
+			@endforelse
+		</table>
+		<table style="width: 100%;" cellpadding=0 cellspacing=0 border="0">
+			<tr>
+				<td style="width: 40%; vertical-align:text-top">
+					<p>
+						<b>Rentang Nilai</b><br>
+						91 - 100 = Memuaskan<br>
+						81 - 90 = Sangat baik<br>
+						71 - 80 = Baik<br>
+						61 - 70 = Cukup<br>
+						51 - 60 = Kurang<br>
+						0 - 50 = Sangat kurang<br>
+					</p>
+				</td>
+				<td style="width: 60%; vertical-align:text-top">
+					
+				</td>
+			</tr>
+		</table>
+		
+		
+		<li>ABSENSI KUMPUL</li>
 		<table class="content" cellspacing="0">
 			<tr>
 				<th style="width: 10%">Tanggal</th>
@@ -156,7 +250,7 @@
 			</tr>
 			@forelse ($gatherings as $gath)
 			<tr>
-				<td>{{ $gath->held_at->format('d/m/Y') }}</td>
+				<td>{{ $gath->held_at ? $gath->held_at->format('d/m/Y') : '' }}</td>
 				<td>{{ $gath->name }}</td>
 				<td>{{ $gath->description ?? '-' }}</td>
 			</tr>
@@ -179,11 +273,11 @@
 			</tr>
 			@forelse ($assignments as $asign)
 			<tr>
-				<td>{{ $asign->signed_at->format('d/m/Y') }}</td>
+				<td>{{ $asign->signed_at ? $asign->signed_at->format('d/m/Y') : '' }}</td>
 				<td>{{ $asign->decree }}</td>
 				<td>{{ $asignoptions[$asign->category] }}</td>
-				<td>{{ $asign->started_at->format('d/m/Y') }}</td>
-				<td>{{ $asign->ended_at->format('d/m/Y') }}</td>
+				<td>{{ $asign->started_at ? $asign->started_at->format('d/m/Y') : '' }}</td>
+				<td>{{ $asign->ended_at ? $asign->ended_at->format('d/m/Y') : '' }}</td>
 				<td>{{ $asign->description ?? '-' }}</td>
 			</tr>
 			@empty
@@ -235,8 +329,8 @@
 			@endforelse
 		</table>
 	</ol>
-<br>
-<br>
+	<br>
+	<br>
 	<table style="width: 100%">
 		<tr>
 			<td style="width: 70%"></td>
