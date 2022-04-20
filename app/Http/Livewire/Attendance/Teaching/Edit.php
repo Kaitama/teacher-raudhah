@@ -41,6 +41,7 @@ class Edit extends Component
 
 	public function update()
 	{
+		// dd(Carbon::createFromFormat('d/m/Y', $this->signed_at)->format('Y-m-d'));
 		$this->validate();
 		$this->teaching->update([
 			'category'	=> $this->category,
