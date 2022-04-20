@@ -13,14 +13,14 @@
 			<!-- Signed_at -->
 			<div class="col-span-6">
 				<x-jet-label for="signed_at">{{ __('Tanggal Absen (dd/mm/yyyy)') }}<x-required /></x-jet-label>
-				<x-jet-input id="signed_at" type="text" class="mt-1 block w-full" wire:model="signed_at" autocomplete="signed_at" />
+				<x-jet-input id="signed_at" type="text" class="mt-1 block w-full" wire:model.defer="signed_at" autocomplete="signed_at" />
 				<x-jet-input-error for="signed_at" class="mt-2" />
 			</div>
 			
 			<!-- Category -->
 			<div class="col-span-6">
 				<x-jet-label for="category">{{ __('Absen Karena') }}<x-required /></x-jet-label>
-				<x-select id="category" wire:model="category" class="mt-1 block w-full">
+				<x-select id="category" wire:model.defer="category" class="mt-1 block w-full">
 					@foreach ($categories as $key => $cat)
 					@if($key == $category || $key >= 4)
 							<option value="{{ $key }}">{{ $cat }}</option>
@@ -33,7 +33,7 @@
 			<!-- Description -->
 			<div class="col-span-6">
 				<x-jet-label for="description">{{ __('Keterangan') }}</x-jet-label>
-				<x-textarea id="description" class="mt-1 block w-full" wire:model="description" autocomplete="description" />
+				<x-textarea id="description" class="mt-1 block w-full" wire:model.defer="description" autocomplete="description" />
 				<x-jet-input-error for="description" class="mt-2" />
 			</div>
 			

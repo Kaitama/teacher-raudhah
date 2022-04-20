@@ -44,9 +44,9 @@ class Edit extends Component
 		// dd(Carbon::createFromFormat('d/m/Y', $this->signed_at)->format('Y-m-d'));
 		$this->validate();
 		$this->teaching->update([
+			'signed_at'	=> Carbon::createFromFormat('d/m/Y', $this->signed_at)->format('Y-m-d'),
 			'category'	=> $this->category,
 			'description'	=> $this->description,
-			'signed_at'	=> Carbon::createFromFormat('d/m/Y', $this->signed_at)->format('Y-m-d'),
 		]);
 		if (!$this->teaching->checker) {
 			$this->teaching->update([
