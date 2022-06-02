@@ -40,7 +40,7 @@
 					<div class="text-gray-600 text-sm">{{ $evaluation->user->nig->number ?? '-' }}</div>
 				</x-td>
 				<x-td>
-					<div class="text-gray-900 text-sm font-semibold">{{ $categories[$evaluation->category] }}</div>
+					<div class="text-gray-900 text-sm font-semibold">{{ $categories[$evaluation->category] ?? '' }}</div>
 					<div class="text-gray-600 text-sm">{{ $evaluation->description ?? '-' }}</div>
 				</x-td>
 				<x-td class="text-right text-sm font-medium">
