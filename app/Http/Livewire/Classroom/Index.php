@@ -10,12 +10,13 @@ class Index extends Component
 {
 	public $classroom, $students;
 
-	public function mount($id){
+	public function mount($id)
+	{
 		$this->classroom = Classroom::find($id);
 		$this->students = Student::where('classroom_id', $id)->where('status', 1)->with('dormroom')->orderBy('name')->get();
 	}
-    public function render()
-    {
-        return view('livewire.classroom.index');
-    }
+	public function render()
+	{
+		return view('livewire.classroom.index');
+	}
 }
