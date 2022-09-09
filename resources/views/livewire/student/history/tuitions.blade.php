@@ -20,7 +20,13 @@
 					<tr>
 						<x-td>{{ $tuitions->firstItem() + $k }}</x-td>
 						<x-td>{{ $tu->paydate->isoFormat('LL') }}</x-td>
-						<x-td>{{ \Carbon\Carbon::createFromDate($tu->foryear, $tu->formonth, 1)->monthName }} {{ $tu->foryear }}</x-td>
+						<x-td>
+							@if($tu->formonth > 99 || $tu->foryear > 3000)
+							{{ $tu->formonth }} / {{ $tu->foryear }}
+							@else
+							{{ \Carbon\Carbon::createFromDate($tu->foryear, $tu->formonth, 1)->monthName }} {{ $tu->foryear }}
+							@endif
+						</x-td>
 					</tr>
 					@empty
 					<tr>
