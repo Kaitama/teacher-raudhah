@@ -18,7 +18,7 @@ class Tuitions extends Component
     {
         $old_tuitions = $this->student->tuitions()->orderByDesc('paydate')->get();
         $bsi_tuitions = $this->student->invoices()->where('status', 2)->orderByDesc('paid_at')->get();
-//        dd($bsi_tuitions);
+
         $array_payments = array();
         foreach ($old_tuitions as $old) {
             $string_desc = $old->formonth > 12 ? ('XX ' . $old->foryear) : Carbon::create($old->foryear, $old->formonth, null)->isoFormat('MMMM Y');
@@ -29,11 +29,6 @@ class Tuitions extends Component
             ];
         }
         foreach ($bsi_tuitions as $bsi) {
-//            if ($bsi->category == 2) {
-//                $header = 'Uang Tahunan ' . $bsi->year;
-//            } else {
-//                $header = 'SPP Bulan ' . Carbon::create($bsi->year, $bsi->month, null)->isoFormat('MMMM Y');
-//            }
             $array_payments[] = [
                 'header' => $bsi->additional_info,
                 'sub' => $bsi->paid_at->isoFormat('LL'),
