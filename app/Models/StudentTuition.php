@@ -9,7 +9,7 @@ class StudentTuition extends Model
 {
     use HasFactory;
 
-		protected $table = 'tuitions';
+    protected $table = 'tuitions';
 
-		protected $dates = ['paydate'];
+    protected $dates = ['paydate'];
 }

@@ -2,14 +2,14 @@
 	<x-slot name="title">
 		{{ __('Uang Sekolah') }}
 	</x-slot>
-	
+
 	<x-slot name="description">
 		{{ __('Riwayat pembayaran uang sekolah ') . ucwords(strtolower($student->name)) }}
 	</x-slot>
-	
+
 	<x-slot name="content">
 		<div class="col-span-6">
-			<x-table>		
+			<x-table>
 				<x-slot name="th">
 					<x-th>{{ __('#') }}</x-th>
 					<x-th>{{ __('Tgl. Pembayaran') }}</x-th>
@@ -18,15 +18,9 @@
 				<x-slot name="td">
 					@forelse ($tuitions as $k => $tu)
 					<tr>
-						<x-td>{{ $tuitions->firstItem() + $k }}</x-td>
-						<x-td>{{ $tu->paydate->isoFormat('LL') }}</x-td>
-						<x-td>
-							@if($tu->formonth > 99 || $tu->foryear > 3000)
-							{{ $tu->formonth }} / {{ $tu->foryear }}
-							@else
-							{{ \Carbon\Carbon::createFromDate($tu->foryear, $tu->formonth, 1)->monthName }} {{ $tu->foryear }}
-							@endif
-						</x-td>
+						<x-td>{{ $k + 1 }}</x-td>
+						<x-td>{{ $tu['sub'] }}</x-td>
+						<x-td>{{ $tu['header'] }}</x-td>
 					</tr>
 					@empty
 					<tr>
@@ -42,7 +36,7 @@
 					@endif
 				</x-slot>
 			</x-table>
-			
+
 		</div>
 	</x-slot>
 </x-profile-panel>

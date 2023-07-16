@@ -9,50 +9,56 @@ class Student extends Model
 {
     use HasFactory;
 
-		protected $dates = ['birthdate'];
+    protected $dates = ['birthdate'];
 
-		public function classroom(){
-			return $this->belongsTo(Classroom::class);
-		}
+    public function classroom(){
+        return $this->belongsTo(Classroom::class);
+    }
 
-		public function dormroom(){
-			return $this->belongsTo(Dormroom::class);
-		}
+    public function dormroom(){
+        return $this->belongsTo(Dormroom::class);
+    }
 
-		public function profile(){
-			return $this->hasOne(StudentProfile::class);
-		}
+    public function profile(){
+        return $this->hasOne(StudentProfile::class);
+    }
 
-		// relation to tuition
+    // relation to tuition
 	public function tuitions()
 	{
 		return $this->hasMany(StudentTuition::class);
 	}
-	
+
+    // relation to maja
+    public function invoices()
+    {
+        return $this->hasMany(MajaInvoice::class);
+    }
+
 	// relation to achievement
 	public function achievements()
 	{
 		return $this->hasMany(StudentAchievement::class);
 	}
-	
+
 	// relation to offense
 	public function offenses()
 	{
 		return $this->hasMany(StudentOffense::class);
 	}
-	
+
 	// relation to permit
 	public function permits()
 	{
 		return $this->hasMany(StudentPermit::class);
 	}
-	
+
 	// relation to user
 	public function parent()
 	{
 		return $this->belongsTo(User::class);
 	}
-	
+
 	// relation to organization
 	public function organizations()
 	{
