@@ -70,14 +70,11 @@ class User extends Authenticatable
 
     public function getPhotoUrlAttribute()
     {
-
-
-
         if (\Storage::disk('public')->has($this->profile_photo_path)) {
             return url('storage/' . $this->profile_photo_path);
         }
         else {
-            return 'https://sisfo.raudhah.ac.id/storage/' . $this->profile_photo_path;
+            return url('img/nopic.png');
         }
 
     }
