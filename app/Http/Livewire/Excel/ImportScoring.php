@@ -11,10 +11,10 @@ use Illuminate\Support\Facades\Storage;
 class ImportScoring extends Component
 {
 	use WithFileUploads;
-	
+
 	public $excel;
 	// public $excelName = 'Pilih file Excel';
-	
+
 	public function render()
 	{
 		return view('livewire.excel.import-scoring');
@@ -35,7 +35,8 @@ class ImportScoring extends Component
 	}
 
 	public function downloadTemplate(){
-		return Storage::disk('public')->download('excel/TEMPLATE_PENILAIAN.xlsx', 'TEMPLATE_PENILAIAN_' . time() . '.xlsx');
+//		return Storage::disk('public')->download('excel/TEMPLATE_PENILAIAN.xlsx', 'TEMPLATE_PENILAIAN_' . time() . '.xlsx');
+        return response()->download(public_path('excels/TEMPLATE_PENILAIAN.xlsx'), 'TEMPLATE_PENILAIAN_' . time() . '.xlsx');
 	}
 
 }

@@ -27,10 +27,7 @@ class ManagementImport implements ToModel, WithStartRow
 				'c1'	=> $row[3] ?? 0,
 				'c2'	=> $row[4] ?? 0,
 				'c3'	=> $row[5] ?? 0,
-				'c4'	=> $row[6] ?? 0,
-				'c5'	=> $row[7] ?? 0,
-				'c6'	=> $row[8] ?? 0,
-				'description'	=> $row[9] ?? null,
+				'description'	=> $row[6] ?? null,
 			]);
 		}
 	}

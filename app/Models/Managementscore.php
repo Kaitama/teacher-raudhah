@@ -26,14 +26,19 @@ class Managementscore extends Model
 
 	static function categoryOptions()
 	{
-		return [
-			'c1'	=> 'Konsistensi Kinerja',
-			'c2'	=> 'Ketaatan Kepada Atasan',
-			'c3'	=> 'Kreativitas / Inovasi',
-			'c4'	=> 'Ketepatan Laporan Kegiatan / Keuangan',
-			'c5'	=> 'Kerja Sama Tim',
-			'c6'	=> 'Ketuntasan Tugas'
-		];
+//		return [
+//			'c1'	=> 'Konsistensi Kinerja',
+//			'c2'	=> 'Ketaatan Kepada Atasan',
+//			'c3'	=> 'Kreativitas / Inovasi',
+//			'c4'	=> 'Ketepatan Laporan Kegiatan / Keuangan',
+//			'c5'	=> 'Kerja Sama Tim',
+//			'c6'	=> 'Ketuntasan Tugas'
+//		];
+        return [
+            'c1'	=> 'Kualitas Kerja',
+            'c2'	=> 'Ketepatan Laporan Kegiatan / Keuangan',
+            'c3'	=> 'Integritas',
+        ];
 	}
 
 	public function user()

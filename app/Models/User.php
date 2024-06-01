@@ -65,7 +65,22 @@ class User extends Authenticatable
 	 */
 	protected $appends = [
 		'profile_photo_url',
+        'photo_url',
 	];
+
+    public function getPhotoUrlAttribute()
+    {
+
+
+
+        if (\Storage::disk('public')->has($this->profile_photo_path)) {
+            return url('storage/' . $this->profile_photo_path);
+        }
+        else {
+            return 'https://sisfo.raudhah.ac.id/storage/' . $this->profile_photo_path;
+        }
+
+    }
 
 	public function nig()
 	{
