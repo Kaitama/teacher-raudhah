@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Teacher;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Http;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\User;

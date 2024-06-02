@@ -1,12 +1,12 @@
 <div class="py-4">
-	
+
 	<div class="px-4">
 		<h1 class="text-xl text-left">{{ __('Fungsional') }}</h1>
 		<div class="text-gray-600">{{ __('Penilaian fungsional') }} {{ $teacher->name }}</div>
 	</div>
-	
-	
-	
+
+
+
 	<x-table class="mt-4 px-0 md:px-4">
 		<x-slot name="th">
 			<x-th>{{ __('#') }}</x-th>
@@ -19,7 +19,7 @@
 			<x-th></x-th>
 		</x-slot>
 		<x-slot name="td">
-			
+
 			@forelse ($teacher_scores as $i => $score)
 			<tr>
 				<x-td class="text-gray-600">{{ $teacher_scores->firstItem() + $i }}</x-td>
@@ -36,7 +36,7 @@
 				</x-td>
 				@endforeach
 				<x-td>
-					@php $rt  = round(array_sum([$score->c1, $score->c2, $score->c3, $score->c4, $score->c5, $score->c6]) / 4, 1) @endphp
+					@php $rt  = round(array_sum([$score->c1, $score->c2, $score->c3]) / 3, 1); @endphp
 					<div class="text-gray-900 font-semibold text-right">
 						{{ $rt }}
 					</div>
@@ -54,7 +54,7 @@
 						@can('u a penilaian')
 						<x-buttons.button-edit href="{{ route('scoring.edit', [$teacher->id, $score->id, 1]) }}"></x-buttons.button-edit>
 						@endcan
-						
+
 						@can('d a penilaian')
 						<x-buttons.button-delete wire:click="confirmDelete({{$score->id}})"></x-buttons.button-delete>
 						@endcan
@@ -64,16 +64,16 @@
 			@empty
 			<x-empty-records colspan="{{ 5 + count($categories) }}" />
 			@endforelse
-			
+
 		</x-slot>
 	</x-table>
-	
+
 	@if($teacher_scores->hasPages())
 	<div class="mt-4">
 		{{ $teacher_scores->links() }}
 	</div>
 	@endif
-	
+
 	<div class="mt-4 px-2 px-4">
 		<div class="flex items-start justify-between">
 			<div class="w-1/2">
@@ -94,22 +94,22 @@
 					<li>{{ __('HRF : Nilai Huruf') }}</li>
 				</ul>
 			</div>
-			
+
 		</div>
 	</div>
-	
+
 	@can('d a penilaian')
 	<x-jet-confirmation-modal wire:model="confirmation_modal">
 		<x-slot name="title">{{ __('Konfirmasi Hapus Penilaian') }}</x-slot>
 		<x-slot name="content">
 			<p>{{ __('Anda yakin ingin menghapus data penilaian keguruan ') }} <span class="text-red-600 font-medium">{{ $teacher->name ?? '' }}</span> {{ __(' pada tanggal ') }} <span class="text-red-600 font-medium">{{ $item ? $item->scored_at->isoFormat('LL') : '' }}</span>?</p>
 		</x-slot>
-		
+
 		<x-slot name="footer">
 			<x-jet-secondary-button wire:click="$toggle('confirmation_modal')" wire:loading.attr="disabled">
 				{{ __('Batal') }}
 			</x-jet-secondary-button>
-			
+
 			<x-jet-danger-button class="ml-2" wire:click="destroy" wire:loading.attr="disabled">
 				{{ __('Ya, Hapus!') }}
 			</x-jet-danger-button>

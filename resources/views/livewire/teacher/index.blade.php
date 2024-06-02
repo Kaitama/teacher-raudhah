@@ -45,7 +45,7 @@
 {{--							elseif ($teacher->photo) $img = 'https://sisfo.raudhah.ac.id/assets/img/user/' . $teacher->photo;--}}
 {{--							else $img = url('img/nopic.png');--}}
 {{--							@endphp--}}
-							<img class="h-10 w-10 rounded-full" src="{{ $teacher->photo_url }}" alt="">
+							<img class="h-10 w-10 rounded-full" src="{{ $teacher->profile_photo_url }}" loading="eager" alt="">
 						</div>
 						<div class="ml-4">
 							<div class="text-sm font-medium text-gray-900">

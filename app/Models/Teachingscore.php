@@ -27,10 +27,12 @@ class Teachingscore extends Model
 	static function categoryOptions()
 	{
 		return [
-			'c1'	=> 'Penyampaian Materi',
-			'c2'	=> 'Penguasaan Materi dan Kelas',
-			'c3'	=> 'Kehadiran Mengajar',
-			'c4'	=> 'Absensi Mengajar',
+//			'c1'	=> 'Penyampaian Materi',
+//			'c2'	=> 'Penguasaan Materi dan Kelas',
+            'c1'    => 'Kompetensi Pedagogik',
+			'c2'	=> 'Kehadiran Mengajar',
+            'c3'    => 'Integritas',
+//			'c4'	=> 'Absensi Mengajar',
 		];
 	}
 

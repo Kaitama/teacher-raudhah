@@ -64,7 +64,7 @@
 			<td>{{ $from }} S/D {{ $to }}</td>
 		</tr>
 	</table>
-	
+
 	<ol type="A">
 		<li>PERIZINAN</li>
 		<table class="content" cellspacing="0">
@@ -89,8 +89,8 @@
 			</tr>
 			@endforelse
 		</table>
-		
-		
+
+
 		<li>PENILAINAN STRUKTURAL</li>
 		<table class="content" cellspacing="0">
 			<tr>
@@ -108,7 +108,7 @@
 				<td style="text-align: center">{{ $score->$k }}</td>
 				@endforeach
 				<td style="text-align: center">
-					@php $rts  = round(array_sum([$score->c1, $score->c2, $score->c3, $score->c4, $score->c5, $score->c6]) / count($moptions), 1) @endphp
+					@php $rts  = round(array_sum([$score->c1, $score->c2, $score->c3]) / count($moptions), 1) @endphp
 					{{ $rts }}
 				</td>
 				<td>{{ $score->description ?? '-' }}</td>
@@ -138,11 +138,11 @@
 						RT = Rata-rata Nilai
 					</p>
 				</td>
-				
+
 			</tr>
 		</table>
-		
-		
+
+
 		<li>PENILAINAN FUNGSIONAL</li>
 		<table class="content" cellspacing="0">
 			<tr>
@@ -160,7 +160,7 @@
 				<td style="text-align: center">{{ $score->$k }}</td>
 				@endforeach
 				<td style="text-align: center">
-					@php $rtf  = round(array_sum([$score->c1, $score->c2, $score->c3, $score->c4]) / count($toptions), 1) @endphp
+					@php $rtf  = round(array_sum([$score->c1, $score->c2, $score->c3]) / count($toptions), 1) @endphp
 					{{ $rtf }}
 				</td>
 				<td>{{ $score->description ?? '-' }}</td>
@@ -190,10 +190,10 @@
 						RT = Rata-rata Nilai
 					</p>
 				</td>
-				
+
 			</tr>
 		</table>
-		
+
 		<li>PENILAIAN PENUGASAN</li>
 		<table class="content" cellspacing="0">
 			<tr>
@@ -226,12 +226,12 @@
 					</p>
 				</td>
 				<td style="width: 60%; vertical-align:text-top">
-					
+
 				</td>
 			</tr>
 		</table>
-		
-		
+
+
 		<li>ABSENSI KUMPUL</li>
 		<table class="content" cellspacing="0">
 			<tr>
@@ -251,7 +251,7 @@
 			</tr>
 			@endforelse
 		</table>
-		
+
 		<li>PENUGASAN</li>
 		<table class="content" cellspacing="0">
 			<tr>
@@ -277,7 +277,7 @@
 			</tr>
 			@endforelse
 		</table>
-		
+
 		<li>KEGIATAN BELAJAR MENGAJAR</li>
 		<table class="content" cellspacing="0">
 			<tr>
@@ -297,7 +297,7 @@
 			</tr>
 			@endforelse
 		</table>
-		
+
 		<li>EVALUASI</li>
 		<table class="content" cellspacing="0">
 			<tr>

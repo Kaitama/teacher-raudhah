@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Http;
 use Spatie\Permission\Traits\HasRoles;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
@@ -65,19 +66,7 @@ class User extends Authenticatable
 	 */
 	protected $appends = [
 		'profile_photo_url',
-        'photo_url',
 	];
-
-    public function getPhotoUrlAttribute()
-    {
-        if (\Storage::disk('public')->has($this->profile_photo_path)) {
-            return url('storage/' . $this->profile_photo_path);
-        }
-        else {
-            return url('img/nopic.png');
-        }
-
-    }
 
 	public function nig()
 	{

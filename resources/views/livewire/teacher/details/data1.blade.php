@@ -13,7 +13,7 @@
 		<x-dl i={{$i}}>
 			<x-slot name="left">{{ __('Photo') }}</x-slot>
 			<x-slot name="right">
-				<img src="{{ $teacher->profile_photo_url }}" class="h-40 w-40 object-cover" alt="">
+				<img src="{{ $photo }}" class="h-64 w-auto" alt="">
 			</x-slot>
 		</x-dl>
 		@php $i = $i+1 @endphp
