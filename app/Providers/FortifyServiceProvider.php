@@ -30,7 +30,7 @@ class FortifyServiceProvider extends ServiceProvider
 	{
 		//
 	}
-	
+
 	/**
 	* Bootstrap any application services.
 	*
@@ -42,22 +42,22 @@ class FortifyServiceProvider extends ServiceProvider
 		Fortify::updateUserProfileInformationUsing(UpdateUserProfileInformation::class);
 		Fortify::updateUserPasswordsUsing(UpdateUserPassword::class);
 		Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
-		
+
 		Fortify::authenticateUsing(function (LoginRequest $request) {
 			$user = User::where('email', $request->username)
 			->orWhere('username', $request->username)->first();
 
-			if ($user && $user->hasPermissionTo('akademik access') || $user->hasRole(['developer', 'administrator']) && Hash::check($request->password, $user->password)) {
+			if (($user && $user->hasPermissionTo('akademik access') || $user->hasRole(['developer', 'administrator'])) && Hash::check($request->password, $user->password)) {
 				if(!$user->profile)	Profile::create(['user_id' => $user->id]);
 				if(!$user->partner)	Userpartner::create(['user_id' => $user->id]);
 				return $user;
-			} 
+			}
 		});
-		
+
 		RateLimiter::for('login', function (Request $request) {
 			return Limit::perMinute(5)->by($request->email.$request->ip());
 		});
-		
+
 		RateLimiter::for('two-factor', function (Request $request) {
 			return Limit::perMinute(5)->by($request->session()->get('login.id'));
 		});
