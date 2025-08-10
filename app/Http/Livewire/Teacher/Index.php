@@ -130,14 +130,17 @@ class Index extends Component
 		$s = '%' . $this->search . '%';
 		$teachers = null;
 		if (strlen($this->search) >= 3) {
-			$teachers = User::where('name', 'like', $s)
-				->orWhere('email', 'like', $s)
-				->orWhereHas('nig', function ($q) use ($s) {
-					$q->where('number', 'like', $s);
-				})
-				->orWhereHas('profile', function ($q) use ($s) {
-					$q->where('phone', 'like', $s);
-				})
+			$teachers = User::where('is_active', true)
+                ->where(function ($query) use ($s) {
+                    return $query->where('name', 'like', $s)
+                    ->orWhere('email', 'like', $s)
+                    ->orWhereHas('nig', function ($q) use ($s) {
+                        $q->where('number', 'like', $s);
+                    })
+                    ->orWhereHas('profile', function ($q) use ($s) {
+                        $q->where('phone', 'like', $s);
+                    });
+                })
 				->has('nig')
 				->role('guru')
 				->with('nig')
@@ -145,7 +148,7 @@ class Index extends Component
 				->with('classroom')
 				->get();
 		} else {
-			$teachers = User::has('nig')->role('guru')->with('nig')->with('profile')->with('classroom')->get();
+			$teachers = User::where('is_active', true)->has('nig')->role('guru')->with('nig')->with('profile')->with('classroom')->get();
 		}
 
 		// filter gender

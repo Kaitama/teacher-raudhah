@@ -44,8 +44,9 @@ class FortifyServiceProvider extends ServiceProvider
 		Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
 
 		Fortify::authenticateUsing(function (LoginRequest $request) {
-			$user = User::where('email', $request->username)
-			->orWhere('username', $request->username)->first();
+			$user = User::where('is_active', true)->where(function ($query) use ($request) {
+                return $query->where('email', $request->username)->orWhere('username', $request->username);
+            })->first();
 
             if ($user && Hash::check($request->password, $user->password)) {
 			    if ($user->hasPermissionTo('akademik access') || $user->hasRole(['developer', 'administrator'])) {
